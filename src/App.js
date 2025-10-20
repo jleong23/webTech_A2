@@ -13,6 +13,7 @@ import {
 import { registerSoundfonts } from "@strudel/soundfonts";
 import { stranger_tune } from "./tunes";
 import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
+import Controls from "./components/Controls";
 
 let globalEditor = null;
 
@@ -20,38 +21,38 @@ const handleD3Data = (event) => {
   console.log(event.detail);
 };
 
-export function SetupButtons() {
-  document
-    .getElementById("play")
-    .addEventListener("click", () => globalEditor.evaluate());
-  document
-    .getElementById("stop")
-    .addEventListener("click", () => globalEditor.stop());
-  document.getElementById("process").addEventListener("click", () => {
-    Proc();
-  });
-  document.getElementById("process_play").addEventListener("click", () => {
-    if (globalEditor != null) {
-      Proc();
-      globalEditor.evaluate();
-    }
-  });
-}
+// export function SetupButtons() {
+//   document
+//     .getElementById("play")
+//     .addEventListener("click", () => globalEditor.evaluate());
+//   document
+//     .getElementById("stop")
+//     .addEventListener("click", () => globalEditor.stop());
+//   document.getElementById("process").addEventListener("click", () => {
+//     Proc();
+//   });
+//   document.getElementById("process_play").addEventListener("click", () => {
+//     if (globalEditor != null) {
+//       Proc();
+//       globalEditor.evaluate();
+//     }
+//   });
+// }
 
-export function ProcAndPlay() {
-  if (globalEditor != null && globalEditor.repl.state.started === true) {
-    console.log(globalEditor);
-    Proc();
-    globalEditor.evaluate();
-  }
-}
+// export function ProcAndPlay() {
+//   if (globalEditor != null && globalEditor.repl.state.started === true) {
+//     console.log(globalEditor);
+//     Proc();
+//     globalEditor.evaluate();
+//   }
+// }
 
-export function Proc() {
-  let proc_text = document.getElementById("proc").value;
-  let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
-  ProcessText(proc_text);
-  globalEditor.setCode(proc_text_replaced);
-}
+// export function Proc() {
+//   let proc_text = document.getElementById("proc").value;
+//   let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
+//   ProcessText(proc_text);
+//   globalEditor.setCode(proc_text_replaced);
+// }
 
 export function ProcessText(match, ...args) {
   let replace = "";
@@ -103,15 +104,17 @@ export default function StrudelDemo() {
       });
 
       document.getElementById("proc").value = stranger_tune;
-      SetupButtons();
-      Proc();
+      // SetupButtons();
+      // Proc();
     }
   }, []);
 
   return (
-    <div>
-      <h2>Strudel Demo</h2>
+    <div className="p-3">
+      <h2 className="text-center">Strudel Demo</h2>
+
       <main>
+        <Controls />
         <div className="container-fluid">
           <div className="row">
             <div
@@ -126,7 +129,8 @@ export default function StrudelDemo() {
               </label>
               <textarea className="form-control" rows="15" id="proc"></textarea>
             </div>
-            <div className="col-md-4">
+
+            {/* <div className="col-md-4">
               <nav>
                 <button id="process" className="btn btn-outline-primary">
                   Preprocess
@@ -142,7 +146,7 @@ export default function StrudelDemo() {
                   Stop
                 </button>
               </nav>
-            </div>
+            </div> */}
           </div>
           <div className="row">
             <div
@@ -159,7 +163,7 @@ export default function StrudelDemo() {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
-                  onChange={ProcAndPlay}
+                  // onChange={ProcAndPlay}
                   defaultChecked
                 />
                 <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -172,7 +176,7 @@ export default function StrudelDemo() {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
-                  onChange={ProcAndPlay}
+                  // onChange={ProcAndPlay}
                 />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                   p1: HUSH
