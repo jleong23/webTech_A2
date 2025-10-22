@@ -1,3 +1,4 @@
+import { FaPlay, FaPause } from "react-icons/fa";
 export default function ControlsPanel({
   onPlay,
   onStop,
@@ -8,49 +9,69 @@ export default function ControlsPanel({
 }) {
   return (
     <div className="space-y-3">
-      <div className="flex gap-2">
+      <div className="flex gap-3">
+        {/* PreProcess Button */}
         <button
           onClick={onPreProcess}
-          className="bg-slate-800 text-white hover:bg-blue-700 p-2 border rounded-md"
+          className="flex items-center justify-center px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-medium shadow-md transition-colors duration-200"
         >
           PreProcess
         </button>
+
+        {/* Proc & Play Button */}
         <button
           onClick={onProcPlay}
-          className="bg-slate-800 text-white p-2 border rounded-md hover:bg-blue-700"
+          className="flex items-center justify-center px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-colors duration-200"
         >
           Proc & Play
         </button>
       </div>
-      <div className="flex gap-2">
-        <button onClick={onPlay} className="btn btn-outline">
-          Play
+
+      <div className="flex gap-3">
+        {/* Play Button */}
+        <button
+          onClick={onPlay}
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-md transition-colors duration-200"
+        >
+          <FaPlay className="w-5 h-5" />
         </button>
-        <button onClick={onStop} className="btn btn-outline">
-          Stop
+
+        {/* Stop Button */}
+        <button
+          onClick={onStop}
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 text-white shadow-md transition-colors duration-200"
+        >
+          <FaPause className="w-5 h-5" />
         </button>
       </div>
 
       <div className="mt-3">
-        <label className="block text-sm font-medium mb-1">p1:</label>
-        <div className="flex items-center gap-3">
-          <label className="inline-flex items-center">
+        <label className="block text-sm font-medium mb-2 text-gray-600">
+          p1:
+        </label>
+        <div className="flex items-center gap-4">
+          {/* ON */}
+          <label className="flex items-center cursor-pointer">
             <input
               type="radio"
               name="p1"
               checked={!p1Hush}
               onChange={() => setP1Hush(false)}
+              className="w-5 h-5 text-green-500 accent-green-500 focus:ring-2 focus:ring-green-400"
             />
-            <span className="ml-2">ON</span>
+            <span className="ml-2 text-gray-600 font-medium">ON</span>
           </label>
-          <label className="inline-flex items-center">
+
+          {/* HUSH */}
+          <label className="flex items-center cursor-pointer">
             <input
               type="radio"
               name="p1"
               checked={p1Hush}
               onChange={() => setP1Hush(true)}
+              className="w-5 h-5 text-red-500 accent-red-500 focus:ring-2 focus:ring-red-400"
             />
-            <span className="ml-2">HUSH</span>
+            <span className="ml-2 text-gray-600 font-medium">HUSH</span>
           </label>
         </div>
       </div>
