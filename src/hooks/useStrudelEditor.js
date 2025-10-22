@@ -25,7 +25,6 @@ export default function useStrudelEditor({
   editorRootRef,
   canvasRef, // ref to <canvas> for drawing pianoRoll
   outputRootRef,
-  onDraw,
   initialCode = "", // empty code for start
 }) {
   const editorRef = useRef(null);

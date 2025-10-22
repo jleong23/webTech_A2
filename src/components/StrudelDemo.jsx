@@ -76,8 +76,15 @@ export default function StrudelDemo() {
         setP1Hush={setP1Hush}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2 space-y-3">
+      <div className="space-y-4">
+        <div className="mt-4 text-xs text-gray-500">
+          <div>Editor ready: {ready ? "yes" : "no"}</div>
+          <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
+        </div>
+      </div>
+
+      <div className=" w-full">
+        <div className="space-y-3">
           <EditorPanel
             procValue={procValue}
             onProcChange={setProcValue}
@@ -85,16 +92,9 @@ export default function StrudelDemo() {
             editorRootRef={editorRootRef}
             outputRootRef={outputRootRef}
           />
-
-          <PianoRollCanvas canvasRef={canvasRef} />
         </div>
 
-        <div className="space-y-4">
-          <div className="mt-4 text-xs text-gray-500">
-            <div>Editor ready: {ready ? "yes" : "no"}</div>
-            <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
-          </div>
-        </div>
+        <PianoRollCanvas canvasRef={canvasRef} />
       </div>
     </div>
   );
