@@ -19,12 +19,13 @@ export default function StrudelDemo() {
   const [procValue, setProcValue] = useState(stranger_tune || "");
   const [p1Hush, setP1Hush] = useState(false);
 
-  const { evaluate, stop, setCode, ready, getReplState } = useStrudelEditor({
-    editorRootRef,
-    outputRootRef,
-    canvasRef,
-    initialCode: procValue,
-  });
+  const { evaluate, stop, setCode, ready, getReplState, editor } =
+    useStrudelEditor({
+      editorRootRef,
+      outputRootRef,
+      canvasRef,
+      initialCode: procValue,
+    });
 
   // run console monkey patch and d3Date listener once
   useEffect(() => {
@@ -40,6 +41,20 @@ export default function StrudelDemo() {
     };
   }, []);
 
+  // Instant HUSH: replaces <p1_Radio> with _ and mutes drums immediately
+  useEffect(() => {
+    if (!editor) return;
+
+    const replaced = processText(procValue, { p1Hush });
+    setCode(replaced);
+
+    // Apply immediately if music is already playing
+    if (getReplState().started) {
+      evaluate(); // re-evaluate code
+      toggleDrums(p1Hush); // mute/unmute drums
+    }
+  }, [p1Hush, procValue]);
+
   // PreProcess function (proc)
   const handlePreProcess = () => {
     const raw = procValue;
@@ -49,7 +64,8 @@ export default function StrudelDemo() {
   };
 
   const handleProcAndPlay = () => {
-    handlePreProcess();
+    const replaced = processText(procValue, { p1Hush });
+    setCode(replaced);
     evaluate();
   };
 
@@ -61,6 +77,14 @@ export default function StrudelDemo() {
     stop();
   };
 
+  const toggleDrums = (mute) => {
+    if (!editor?.repl) return;
+    const drums = editor.repl.state.scope?.drums;
+    const drums2 = editor.repl.state.scope?.drums2;
+    if (drums) drums.postgain(mute ? 0 : 1);
+    if (drums2) drums2.postgain(mute ? 0 : 1);
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-slate-500 text-center my-3 font-bold">
@@ -70,7 +94,6 @@ export default function StrudelDemo() {
       <ControlsPanel
         onPlay={handlePlay}
         onStop={handleStop}
-        onPreprocess={handlePreProcess}
         onProcPlay={handleProcAndPlay}
         p1Hush={p1Hush}
         setP1Hush={setP1Hush}
@@ -91,7 +114,7 @@ export default function StrudelDemo() {
             procRef={procRef}
             editorRootRef={editorRootRef}
             outputRootRef={outputRootRef}
-          />
+          />{" "}
         </div>
 
         <PianoRollCanvas canvasRef={canvasRef} />

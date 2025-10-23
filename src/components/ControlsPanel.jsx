@@ -2,7 +2,6 @@ import { FaPlay, FaPause } from "react-icons/fa";
 export default function ControlsPanel({
   onPlay,
   onStop,
-  onPreProcess,
   onProcPlay,
   p1Hush,
   setP1Hush,
@@ -10,14 +9,6 @@ export default function ControlsPanel({
   return (
     <div className="space-y-3">
       <div className="flex gap-3">
-        {/* PreProcess Button */}
-        <button
-          onClick={onPreProcess}
-          className="flex items-center justify-center px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-medium shadow-md transition-colors duration-200"
-        >
-          PreProcess
-        </button>
-
         {/* Proc & Play Button */}
         <button
           onClick={onProcPlay}
@@ -47,10 +38,9 @@ export default function ControlsPanel({
 
       <div className="mt-3">
         <label className="block text-sm font-medium mb-2 text-gray-600">
-          p1:
+          Hush
         </label>
         <div className="flex items-center gap-4">
-          {/* ON */}
           <label className="flex items-center cursor-pointer">
             <input
               type="radio"
@@ -62,7 +52,6 @@ export default function ControlsPanel({
             <span className="ml-2 text-gray-600 font-medium">ON</span>
           </label>
 
-          {/* HUSH */}
           <label className="flex items-center cursor-pointer">
             <input
               type="radio"
