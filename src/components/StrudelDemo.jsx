@@ -25,9 +25,15 @@ function toggleDrums(editor, mute) {
  * function to apply tempo to track
  */
 function applyTempo(code, tempo) {
-  //!---TODO
-  const cleaned = code.replace(/setcps\((.*?)\)/, "").trim();
-  return `setcps(${tempo}/60/4)\n${cleaned}`;
+  const lines = code.split("\n"); // Split code by each line
+  return lines
+    .map(
+      (line) =>
+        line.startsWith("setcps(") // find lines starting with setcps
+          ? `setcps(${tempo}/60/4)` // replace it with your tempo calculation
+          : line // leave other lines unchanged
+    )
+    .join("\n"); // rejoin the lines back into one string
 }
 
 export default function StrudelDemo() {
@@ -94,15 +100,20 @@ export default function StrudelDemo() {
   useEffect(() => {
     if (!editor) return;
 
-    const replaced = processText(procValue, { p1Hush });
-    const replacedTempo = applyTempo(replaced, tempo);
-    setCode(replacedTempo);
+    // Use timeOuts to debounce tempo changes to prevent choppy playbacks
+    const timer = setTimeout(() => {
+      const replaced = processText(procValue, { p1Hush });
+      const replacedTempo = applyTempo(replaced, tempo);
+      setCode(replacedTempo);
+      // Apply immediately if music is already playing
+      if (getReplState().started) {
+        evaluate(); // re-evaluate code
+        toggleDrums(editor, p1Hush); // mute/unmute drums
+      }
+    }, 300);
 
-    // Apply immediately if music is already playing
-    if (getReplState().started) {
-      evaluate(); // re-evaluate code
-      toggleDrums(editor, p1Hush); // mute/unmute drums
-    }
+    // Clean up to cancel previous timer if slider is used again
+    return () => clearTimeout(timer);
   }, [p1Hush, procValue, tempo]);
 
   return (
