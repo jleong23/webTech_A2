@@ -1,3 +1,10 @@
+/**
+ * ControlPanel:
+ * 1. Slider controls to set Tempo
+ * 2. Play / Stop / Proc controls
+ * 3. Hush radio buttons to mute drums
+ */
+
 import { FaPlay, FaPause } from "react-icons/fa";
 export default function ControlsPanel({
   onPlay,

@@ -10,6 +10,10 @@ import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
 
+/**
+ * - Toggles (mute/unmute) drum by adjusting postgain
+ * - Accepts the 'editor' instance and a boolean 'mute'
+ */
 function toggleDrums(editor, mute) {
   if (!editor?.repl) return;
   const drums = editor.repl.state.scope?.drums;
@@ -17,20 +21,29 @@ function toggleDrums(editor, mute) {
   if (drums) drums.postgain(mute ? 0 : 1);
   if (drums2) drums2.postgain(mute ? 0 : 1);
 }
+/**
+ * function to apply tempo to track
+ */
 function applyTempo(code, tempo) {
+  //!---TODO
   const cleaned = code.replace(/setcps\((.*?)\)/, "").trim();
   return `setcps(${tempo}/60/4)\n${cleaned}`;
 }
 
 export default function StrudelDemo() {
+  // Refs to DOM elements used by the Strudel editor
   const editorRootRef = useRef(null);
   const outputRootRef = useRef(null);
   const canvasRef = useRef(null);
   const procRef = useRef(null);
 
   const [procValue, setProcValue] = useState(stranger_tune || "");
+  // Hush toggle for drums
   const [p1Hush, setP1Hush] = useState(false);
+  // State for tempo ( 140bpm as default )
+  const [tempo, setTempo] = useState(140);
 
+  // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
     useStrudelEditor({
       editorRootRef,
@@ -39,9 +52,7 @@ export default function StrudelDemo() {
       initialCode: procValue,
     });
 
-  // State for tempo
-  const [tempo, setTempo] = useState(140);
-
+  // Handler for "Proc & Play" button: preprocess, apply temppo, and update into editor.
   const handleProcAndPlay = () => {
     const replaced = processText(procValue, { p1Hush });
     const replacedTempo = applyTempo(replaced, tempo);
@@ -49,15 +60,17 @@ export default function StrudelDemo() {
     evaluate();
   };
 
+  // Play handler
   const handlePlay = () => {
     evaluate();
   };
 
+  // Stop handler
   const handleStop = () => {
     stop();
   };
 
-  // run console monkey patch and d3Date listener once
+  // Run console monkey patch and d3Date listener once
   useEffect(() => {
     console_monkey_patch();
 
@@ -71,7 +84,13 @@ export default function StrudelDemo() {
     };
   }, []);
 
-  // Instant HUSH: replaces <p1_Radio> with _ and mutes drums immediately
+  /**
+   * When p1Hush, procValue or tempo changes, it:
+   * 1. Process the text ( to apply HUSH )
+   * 2. Apply tempo changes
+   * 3. Set it into editor
+   * 4. If music is playing, it re-evaluate to update playback and toggle drums as needed
+   */
   useEffect(() => {
     if (!editor) return;
 

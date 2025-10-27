@@ -1,5 +1,5 @@
 /**
- * This holds the textArea(proc input)
+ * EditorPanel: This holds the textArea(proc input)
  */
 export default function EditorPanel({
   procValue,
