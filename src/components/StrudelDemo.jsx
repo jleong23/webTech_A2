@@ -10,6 +10,18 @@ import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
 
+function toggleDrums(editor, mute) {
+  if (!editor?.repl) return;
+  const drums = editor.repl.state.scope?.drums;
+  const drums2 = editor.repl.state.scope?.drums2;
+  if (drums) drums.postgain(mute ? 0 : 1);
+  if (drums2) drums2.postgain(mute ? 0 : 1);
+}
+function applyTempo(code, tempo) {
+  const cleaned = code.replace(/setcps\((.*?)\)/, "").trim();
+  return `setcps(${tempo}/60/4)\n${cleaned}`;
+}
+
 export default function StrudelDemo() {
   const editorRootRef = useRef(null);
   const outputRootRef = useRef(null);
@@ -26,6 +38,24 @@ export default function StrudelDemo() {
       canvasRef,
       initialCode: procValue,
     });
+
+  // State for tempo
+  const [tempo, setTempo] = useState(140);
+
+  const handleProcAndPlay = () => {
+    const replaced = processText(procValue, { p1Hush });
+    const replacedTempo = applyTempo(replaced, tempo);
+    setCode(replacedTempo);
+    evaluate();
+  };
+
+  const handlePlay = () => {
+    evaluate();
+  };
+
+  const handleStop = () => {
+    stop();
+  };
 
   // run console monkey patch and d3Date listener once
   useEffect(() => {
@@ -46,44 +76,15 @@ export default function StrudelDemo() {
     if (!editor) return;
 
     const replaced = processText(procValue, { p1Hush });
-    setCode(replaced);
+    const replacedTempo = applyTempo(replaced, tempo);
+    setCode(replacedTempo);
 
     // Apply immediately if music is already playing
     if (getReplState().started) {
       evaluate(); // re-evaluate code
-      toggleDrums(p1Hush); // mute/unmute drums
+      toggleDrums(editor, p1Hush); // mute/unmute drums
     }
-  }, [p1Hush, procValue]);
-
-  // PreProcess function (proc)
-  const handlePreProcess = () => {
-    const raw = procValue;
-    const replaced = processText(raw, { p1Hush });
-    //set the code into editor
-    setCode(replaced);
-  };
-
-  const handleProcAndPlay = () => {
-    const replaced = processText(procValue, { p1Hush });
-    setCode(replaced);
-    evaluate();
-  };
-
-  const handlePlay = () => {
-    evaluate();
-  };
-
-  const handleStop = () => {
-    stop();
-  };
-
-  const toggleDrums = (mute) => {
-    if (!editor?.repl) return;
-    const drums = editor.repl.state.scope?.drums;
-    const drums2 = editor.repl.state.scope?.drums2;
-    if (drums) drums.postgain(mute ? 0 : 1);
-    if (drums2) drums2.postgain(mute ? 0 : 1);
-  };
+  }, [p1Hush, procValue, tempo]);
 
   return (
     <div className="p-4">
@@ -97,6 +98,8 @@ export default function StrudelDemo() {
         onProcPlay={handleProcAndPlay}
         p1Hush={p1Hush}
         setP1Hush={setP1Hush}
+        tempo={tempo}
+        setTempo={setTempo}
       />
 
       <div className="space-y-4">
