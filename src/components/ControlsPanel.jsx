@@ -14,6 +14,8 @@ export default function ControlsPanel({
   setP1Hush,
   tempo,
   setTempo,
+  volume,
+  setVolume,
 }) {
   return (
     <div className="space-y-3">
@@ -74,8 +76,9 @@ export default function ControlsPanel({
         </div>
       </div>
 
+      {/* Tempo Control */}
       <div className="mt-6">
-        <label className="block text-sm font-medium mb-2 text-gray-600">
+        <label className="block text-sm font-medium mb-1 text-gray-600">
           Tempo (BPM): {tempo}
         </label>
         <input
@@ -85,6 +88,21 @@ export default function ControlsPanel({
           value={tempo}
           onChange={(e) => setTempo(Number(e.target.value))}
           className="w-full accent-blue-600 cursor-pointer"
+        />
+      </div>
+
+      {/* Volume Control Slider */}
+      <div>
+        <label className="block text-sm font-medium mb-1 text-gray-600">
+          Volume: {Math.round(volume * 100)}%
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={Math.round(volume * 100)}
+          onChange={(e) => setVolume(Number(e.target.value) / 100)}
+          className="w-full accent-blue-800 cursor-pointer"
         />
       </div>
     </div>
