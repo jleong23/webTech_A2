@@ -1,7 +1,7 @@
 /**
  * EditorPanel: This holds the textArea(proc input)
  */
-export default function EditorPanel({
+export default function PreProessTextArea({
   procValue,
   onProcChange,
   procRef,

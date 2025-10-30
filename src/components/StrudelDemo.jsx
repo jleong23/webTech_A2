@@ -3,7 +3,7 @@
  */
 import { useRef, useEffect, useState } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
-import EditorPanel from "./EditorPanel";
+import PreProessTextArea from "./PreProessTextArea";
 import ControlsPanel from "./ControlsPanel";
 import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
@@ -141,7 +141,7 @@ export default function StrudelDemo() {
 
       <div className=" w-full">
         <div className="space-y-3">
-          <EditorPanel
+          <PreProessTextArea
             procValue={procValue}
             onProcChange={setProcValue}
             procRef={procRef}
