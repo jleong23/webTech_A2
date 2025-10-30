@@ -1,6 +1,6 @@
 export default function ReverbControl({ reverb = 0, setReverb }) {
   return (
-    <div>
+    <div className="flex gap-2">
       <label htmlFor="reverbControl">Reverb: {reverb.toFixed(2)}</label>
       <input
         type="range"
