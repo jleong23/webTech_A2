@@ -35,20 +35,21 @@ export default function useStrudelEditor({
 
     // Canvas for drawing piano roll
     const canvas = canvasRef.current;
+
+    //! ?
+    const context = canvas ? canvas.getContext("2d") : null;
+    const drawTime = [-2, 2];
     if (canvas) {
       canvas.width = (canvas.clientWidth || 400) * 2;
       canvas.height = (canvas.clientHeight || 150) * 2;
     }
 
-    //! ?
-    const context = canvas ? canvas.getContext("2d") : null;
-    const drawTime = [-2, 2];
-
+    // Initialize strudel editor
     editorRef.current = new StrudelMirror({
+      root: editorRootRef.current, // mount editor inside <div>
       defaultOutput: webaudioOutput,
       getTime: () => getAudioContext().currentTime, // track playback time
       transpiler, // parse & execute code
-      root: editorRootRef.current, // mount editor inside <div>
       drawTime,
       onDraw: (haps, time) =>
         drawPianoroll({ haps, time, ctx: context, drawTime, fold: 0 }),
@@ -79,16 +80,11 @@ export default function useStrudelEditor({
     setReady(true);
 
     return () => {
-      try {
-        editorRef.current?.stop?.();
-        // clear editor DOM
-        if (editorRootRef.current) {
-          editorRootRef.current.innerHTML = "";
-        }
-      } finally {
-        editorRef.current = null;
-        setReady(false);
-      }
+      editorRef.current?.stop?.();
+      // clear editor DOM
+      if (editorRootRef.current) editorRootRef.current.innerHTML = "";
+      editorRef.current = null;
+      setReady(false);
     };
   }, [editorRootRef, canvasRef, outputRootRef, initialCode]);
 
