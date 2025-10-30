@@ -10,6 +10,9 @@ import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
 
+// Control imports
+import PlayStopButtons from "./PlayStopButtons";
+
 /**
  * - Toggles (mute/unmute) drum by adjusting postgain
  * - Accepts the 'editor' instance and a boolean 'mute'
@@ -123,14 +126,13 @@ export default function StrudelDemo() {
       </h2>
 
       <ControlsPanel
-        onPlay={handlePlay}
-        onStop={handleStop}
         onProcPlay={handleProcAndPlay}
         p1Hush={p1Hush}
         setP1Hush={setP1Hush}
         tempo={tempo}
         setTempo={setTempo}
       />
+      <PlayStopButtons onPlay={handlePlay} onStop={handleStop} />
 
       <div className="space-y-4">
         <div className="mt-4 text-xs text-gray-500">

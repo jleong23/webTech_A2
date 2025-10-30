@@ -5,7 +5,6 @@
  * 3. Hush radio buttons to mute drums
  */
 
-import { FaPlay, FaPause } from "react-icons/fa";
 export default function ControlsPanel({
   onPlay,
   onStop,
@@ -24,24 +23,6 @@ export default function ControlsPanel({
           className="flex items-center justify-center px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-colors duration-200"
         >
           Proc & Play
-        </button>
-      </div>
-
-      <div className="flex gap-3">
-        {/* Play Button */}
-        <button
-          onClick={onPlay}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-md transition-colors duration-200"
-        >
-          <FaPlay className="w-5 h-5" />
-        </button>
-
-        {/* Stop Button */}
-        <button
-          onClick={onStop}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 text-white shadow-md transition-colors duration-200"
-        >
-          <FaPause className="w-5 h-5" />
         </button>
       </div>
 
