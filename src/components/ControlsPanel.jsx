@@ -6,6 +6,7 @@
  */
 import MuteDrum from "./MuteDrum";
 import PlayStopButtons from "./PlayStopButtons";
+import ProcAndPlay from "./ProcAndPlay";
 import TempoControl from "./TempoControl";
 
 export default function ControlsPanel({
@@ -19,15 +20,8 @@ export default function ControlsPanel({
 }) {
   return (
     <div className="space-y-3">
-      <div className="flex gap-3">
-        {/* Proc & Play Button */}
-        <button
-          onClick={onProcPlay}
-          className="flex items-center justify-center px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-colors duration-200"
-        >
-          Proc & Play
-        </button>
-      </div>
+      {/* Process text and Play Song */}
+      <ProcAndPlay onProcPlay={onProcPlay} />
 
       {/* Play / Stop */}
       <PlayStopButtons onPlay={onPlay} onStop={onStop} />
@@ -35,6 +29,7 @@ export default function ControlsPanel({
       {/* Mute drums Button */}
       <MuteDrum p1Hush={p1Hush} setP1Hush={setP1Hush} />
 
+      {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />
     </div>
   );
