@@ -51,6 +51,8 @@ export default function StrudelDemo() {
   const [tempo, setTempo] = useState(140);
   // state for drum pattern ( pattern 0 as default )
   const [pattern, setPattern] = useState(0);
+  // state for reverb control ( 0.6 as default reverb )
+  const [reverb, setReverb] = useState(0.6);
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
@@ -63,7 +65,8 @@ export default function StrudelDemo() {
 
   // Handler for "Proc & Play" button: preprocess, apply temppo, and update into editor.
   const handleProcAndPlay = () => {
-    let replaced = processText(procValue, { p1Hush });
+    let replaced = processText(procValue, { p1Hush, reverb });
+
     replaced = replaced.replaceAll(
       "const pattern = 0",
       `const pattern = ${pattern}`
@@ -109,7 +112,8 @@ export default function StrudelDemo() {
 
     // Use timeOuts to debounce tempo changes to prevent choppy playbacks
     const timer = setTimeout(() => {
-      let replaced = processText(procValue, { p1Hush });
+      let replaced = processText(procValue, { p1Hush, reverb });
+
       replaced = replaced.replaceAll(
         "const pattern = 0",
         `const pattern = ${pattern}`
@@ -125,7 +129,7 @@ export default function StrudelDemo() {
 
     // Clean up to cancel previous timer if slider is used again
     return () => clearTimeout(timer);
-  }, [p1Hush, procValue, tempo, pattern, editor]);
+  }, [p1Hush, procValue, tempo, pattern, editor, reverb]);
 
   return (
     <div className="p-4">
@@ -143,6 +147,8 @@ export default function StrudelDemo() {
         setTempo={setTempo}
         pattern={pattern}
         setPattern={setPattern}
+        reverb={reverb}
+        setReverb={setReverb}
       />
 
       <div className="space-y-4">

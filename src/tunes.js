@@ -43,9 +43,9 @@ bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
-.room(0.6)
+.room(<reverb>)
 .lpf(700)
-.room(0.4)
+.room(<reverb>)
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -54,7 +54,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
-.room(0.6)
+.room(<reverb>)
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
 
@@ -83,7 +83,7 @@ stack(
   s("hh").struct("x*16").bank("RolandTR808")
   .gain(0.6)
   .jux(rev)
-  .room(sine.range(0.1,0.4))
+  .room(<reverb>)
   .postgain(0.5),
   
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")

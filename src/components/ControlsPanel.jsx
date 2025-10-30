@@ -10,6 +10,7 @@ import PlayStopButtons from "./PlayStopButtons";
 import ProcAndPlay from "./ProcAndPlay";
 import TempoControl from "./TempoControl";
 import DrumPatternSelector from "./DrumPatternSelector";
+import ReverbControl from "./ReverbControl";
 
 export default function ControlsPanel({
   onPlay,
@@ -23,6 +24,8 @@ export default function ControlsPanel({
   setVolume,
   pattern,
   setPattern,
+  reverb,
+  setReverb,
 }) {
   return (
     <div className="space-y-3">
@@ -39,6 +42,8 @@ export default function ControlsPanel({
       <TempoControl tempo={tempo} setTempo={setTempo} />
 
       <DrumPatternSelector pattern={pattern} setPattern={setPattern} />
+
+      <ReverbControl reverb={reverb} setReverb={setReverb} />
     </div>
   );
 }
