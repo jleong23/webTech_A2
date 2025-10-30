@@ -4,10 +4,12 @@
  * 2. Play / Stop / Proc controls
  * 3. Hush radio buttons to mute drums
  */
+
 import MuteDrum from "./MuteDrum";
 import PlayStopButtons from "./PlayStopButtons";
 import ProcAndPlay from "./ProcAndPlay";
 import TempoControl from "./TempoControl";
+import DrumPatternSelector from "./DrumPatternSelector";
 
 export default function ControlsPanel({
   onPlay,
@@ -19,6 +21,8 @@ export default function ControlsPanel({
   setTempo,
   volume,
   setVolume,
+  pattern,
+  setPattern,
 }) {
   return (
     <div className="space-y-3">
@@ -33,6 +37,8 @@ export default function ControlsPanel({
 
       {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />
+
+      <DrumPatternSelector pattern={pattern} setPattern={setPattern} />
     </div>
   );
 }

@@ -48,6 +48,8 @@ export default function StrudelDemo() {
   const [p1Hush, setP1Hush] = useState(false);
   // State for tempo ( 140bpm as default )
   const [tempo, setTempo] = useState(140);
+  // state for drum pattern ( pattern 0 as default )
+  const [pattern, setPattern] = useState(0);
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
@@ -60,7 +62,11 @@ export default function StrudelDemo() {
 
   // Handler for "Proc & Play" button: preprocess, apply temppo, and update into editor.
   const handleProcAndPlay = () => {
-    const replaced = processText(procValue, { p1Hush });
+    let replaced = processText(procValue, { p1Hush });
+    replaced = replaced.replaceAll(
+      "const pattern = 0",
+      `const pattern = ${pattern}`
+    );
     const replacedTempo = applyTempo(replaced, tempo);
     setCode(replacedTempo);
     evaluate();
@@ -102,7 +108,11 @@ export default function StrudelDemo() {
 
     // Use timeOuts to debounce tempo changes to prevent choppy playbacks
     const timer = setTimeout(() => {
-      const replaced = processText(procValue, { p1Hush });
+      let replaced = processText(procValue, { p1Hush });
+      replaced = replaced.replaceAll(
+        "const pattern = 0",
+        `const pattern = ${pattern}`
+      );
       const replacedTempo = applyTempo(replaced, tempo);
       setCode(replacedTempo);
       // Apply immediately if music is already playing
@@ -130,6 +140,8 @@ export default function StrudelDemo() {
         setP1Hush={setP1Hush}
         tempo={tempo}
         setTempo={setTempo}
+        pattern={pattern}
+        setPattern={setPattern}
       />
 
       <div className="space-y-4">
