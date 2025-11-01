@@ -88,7 +88,7 @@ stack(
   
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
   .gain(0.1)
-  .postgain(pick(gain_patterns, pattern))
+  .postgain(pick(gain_patterns, pattern)* 0.3)
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
