@@ -43,7 +43,7 @@ export default function ControlsPanel({
       <TempoControl tempo={tempo} setTempo={setTempo} />
 
       {/* Volume Slider */}
-      <VolumeSlider />
+      <VolumeSlider volume={volume} setVolume={setVolume} />
 
       <DrumPatternSelector pattern={pattern} setPattern={setPattern} />
 
