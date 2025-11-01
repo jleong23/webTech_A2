@@ -4,7 +4,7 @@
 import { useRef, useEffect, useState } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
 import PreProessTextArea from "./PreProessTextArea";
-import ControlsPanel from "./ControlsPanel";
+import ControlsPanel from "./Controls/ControlsPanel";
 import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";

@@ -5,12 +5,12 @@
  * 3. Hush radio buttons to mute drums
  */
 
-import MuteDrum from "./MuteDrum";
-import PlayStopButtons from "./PlayStopButtons";
-import ProcAndPlay from "./ProcAndPlay";
-import TempoControl from "./TempoControl";
-import DrumPatternSelector from "./DrumPatternSelector";
-import ReverbControl from "./ReverbControl";
+import MuteDrum from "../Controls/MuteDrum";
+import PlayStopButtons from "../Controls/PlayStopButtons";
+import ProcAndPlay from "../Controls/ProcAndPlay";
+import TempoControl from "../Controls/TempoControl";
+import DrumPatternSelector from "../Controls/DrumPatternSelector";
+import ReverbControl from "../Controls/ReverbControl";
 
 export default function ControlsPanel({
   onPlay,
