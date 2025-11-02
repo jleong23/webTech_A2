@@ -9,7 +9,6 @@ import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
-import { patt } from "@strudel/core";
 
 /**
  * - Toggles (mute/unmute) drum by adjusting postgain
@@ -131,7 +130,18 @@ export default function StrudelDemo() {
 
     // Clean up to cancel previous timer if slider is used again
     return () => clearTimeout(timer);
-  }, [p1Hush, procValue, tempo, pattern, editor, reverb]);
+  }, [
+    p1Hush,
+    procValue,
+    tempo,
+    pattern,
+    editor,
+    reverb,
+    volume,
+    evaluate,
+    setCode,
+    getReplState,
+  ]);
 
   return (
     <div className="p-4">
