@@ -164,7 +164,7 @@ export default function StrudelDemo() {
           editorRootRef={editorRootRef}
           outputRootRef={outputRootRef}
         />{" "}
-        <div className="bg-gray-800 border border-gray-700 rounded-xl p-2">
+        <div>
           <PianoRollCanvas canvasRef={canvasRef} />
         </div>
       </div>
