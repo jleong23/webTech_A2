@@ -9,7 +9,6 @@ import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
-import { patt } from "@strudel/core";
 
 /**
  * - Toggles (mute/unmute) drum by adjusting postgain
@@ -132,9 +131,9 @@ export default function StrudelDemo() {
   }, [p1Hush, procValue, tempo, pattern, editor, reverb]);
 
   return (
-    <div className="p-4">
-      <h2 className="text-slate-500 text-center my-3 font-bold">
-        Strudel Demo
+    <div className="p-6 bg-gray-900 min-h-screen text-white">
+      <h2 className="text-5xl font-bold text-red-500 text-center">
+        Strudel Mixer
       </h2>
 
       <ControlsPanel
@@ -150,26 +149,24 @@ export default function StrudelDemo() {
         reverb={reverb}
         setReverb={setReverb}
       />
-
-      <div className="space-y-4">
-        <div className="mt-4 text-xs text-gray-500">
-          <div>Editor ready: {ready ? "yes" : "no"}</div>
-          <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
-        </div>
+      {/* Status info */}
+      <div className="mt-2  text-gray-200 flex justify-center gap-6">
+        <div>Editor ready: {ready ? "yes" : "no"}</div>
+        <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
       </div>
 
-      <div className=" w-full">
-        <div className="space-y-3">
-          <PreProessTextArea
-            procValue={procValue}
-            onProcChange={setProcValue}
-            procRef={procRef}
-            editorRootRef={editorRootRef}
-            outputRootRef={outputRootRef}
-          />{" "}
+      {/* Editor  */}
+      <div className="mt-6 space-y-6">
+        <PreProessTextArea
+          procValue={procValue}
+          onProcChange={setProcValue}
+          procRef={procRef}
+          editorRootRef={editorRootRef}
+          outputRootRef={outputRootRef}
+        />{" "}
+        <div className="bg-gray-800 border border-gray-700 rounded-xl p-2">
+          <PianoRollCanvas canvasRef={canvasRef} />
         </div>
-
-        <PianoRollCanvas canvasRef={canvasRef} />
       </div>
     </div>
   );
