@@ -151,6 +151,8 @@ export default function StrudelDemo() {
         setPattern={setPattern}
         reverb={reverb}
         setReverb={setReverb}
+        volume={volume}
+        setVolume={setVolume}
       />
 
       <div className="space-y-4">
