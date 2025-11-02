@@ -53,6 +53,8 @@ export default function StrudelDemo() {
   const [pattern, setPattern] = useState(0);
   // state for reverb control ( 0.6 as default reverb )
   const [reverb, setReverb] = useState(0.6);
+  // stat for volume control ( 50 as default volume)
+  const [volume, setVolume] = useState(50);
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
