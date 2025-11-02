@@ -28,7 +28,7 @@ export default function ControlsPanel({
   setReverb,
 }) {
   return (
-    <div className="space-y-3">
+    <div className="p-5 space-y-6 bg-gray-900 text-white rounded-lg shadow-lg max-w-md mx-auto">
       {/* Process text and Play Song */}
       <ProcAndPlay onProcPlay={onProcPlay} />
 
