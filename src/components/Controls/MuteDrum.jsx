@@ -1,30 +1,28 @@
 export default function MuteDrum({ p1Hush, setP1Hush }) {
   return (
-    <div className="mt-3">
-      <label className="block text-sm font-medium mb-2 text-gray-600">
-        Hush
-      </label>
-      <div className="flex items-center gap-4">
-        <label className="flex items-center cursor-pointer">
+    <div className="flex flex-col gap-2">
+      <span className="font-bold text-red-500">Hush</span>
+      <div className="flex gap-4">
+        <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
             name="p1"
             checked={!p1Hush}
             onChange={() => setP1Hush(false)}
-            className="w-5 h-5 text-green-500 accent-green-500 focus:ring-2 focus:ring-green-400"
+            className="w-5 h-5 accent-red-600"
           />
-          <span className="ml-2 text-gray-600 font-medium">ON</span>
+          ON
         </label>
 
-        <label className="flex items-center cursor-pointer">
+        <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
             name="p1"
             checked={p1Hush}
             onChange={() => setP1Hush(true)}
-            className="w-5 h-5 text-red-500 accent-red-500 focus:ring-2 focus:ring-red-400"
+            className="w-5 h-5 accent-red-600"
           />
-          <span className="ml-2 text-gray-600 font-medium">HUSH</span>
+          HUSH
         </label>
       </div>
     </div>
