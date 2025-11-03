@@ -72,18 +72,28 @@ export default function StrudelDemo() {
       initialCode: procValue,
     });
 
-  // Build and evaluate code, applying HUSH, pattern, tempo and drum bank.
+  /**
+   * BuildAndEvaluate:
+   * - Applying HUSH
+   * - Select drum kick pattern
+   * - Current tempo
+   * - Select drum bank.
+   * - Reverb value
+   * After processing the code, it updates the editor via setCode.
+   * useCallBack: prevent useEffect from trigger unnecessarily.
+   */
   const buildAndEvaluate = useCallback(
     (opts = { evaluateIfPlaying: true }) => {
       if (!editor) return;
-      let replaced = processText(procValue, { p1Hush, reverb });
+      let replaced = processText(procValue, { p1Hush, reverb }); // apply HUSH & reverb effect
       replaced = replaced.replaceAll(
         "const pattern = 0",
         `const pattern = ${pattern}`
-      );
-      replaced = changeDrumBank(replaced, drumBank);
-      const replacedTempo = applyTempo(replaced, tempo);
-      setCode(replacedTempo);
+      ); // Update drum pattern
+      replaced = changeDrumBank(replaced, drumBank); // Update drumBank
+      const replacedTempo = applyTempo(replaced, tempo); // Update tempo
+      setCode(replacedTempo); // update editor with processed code
+      // If music is currently playing, re-evaluate to update playback
       if (opts.evaluateIfPlaying && getReplState().started) {
         evaluate();
       }
@@ -133,17 +143,20 @@ export default function StrudelDemo() {
   }, []);
 
   /**
-   * When p1Hush, procValue or tempo changes, it:
-   * 1. Process the text ( to apply HUSH )
-   * 2. Apply tempo changes
-   * 3. Set it into editor
-   * 4. If music is playing, it re-evaluate to update playback and toggle drums as needed
+   * Update editor when changes made:
+   * 1. p1Hush (mute/unmute drums)
+   * 2. tempo
+   * 3. pattern
+   * 4. reverb
+   * 5. drumBank
+   * .6 procValue (main Strudel code)
    */
   useEffect(() => {
     if (!editor) return;
+    // Timeout ensures smooth updates without interrupting user typing.
     const timer = setTimeout(() => {
       buildAndEvaluate({ evaluateIfPlaying: true });
-      // keep hush in sync
+      // Sync drum mute/unmute according to p1Hush
       toggleDrums(editor, p1Hush);
     }, 150);
     return () => clearTimeout(timer);
@@ -158,7 +171,7 @@ export default function StrudelDemo() {
     buildAndEvaluate,
   ]);
 
-  // Re-evaluate when drumBank changes when music is playing
+  // Re-evaluate when drumBank changes when music is playing to ensure drumKit updates sound immediately
   useEffect(() => {
     if (!editor) return;
     if (getReplState().started) {
