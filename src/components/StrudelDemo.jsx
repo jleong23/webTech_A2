@@ -9,6 +9,7 @@ import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
+import SelectorPanel from "./Selectors/SelectorPanel";
 
 /**
  * - Toggles (mute/unmute) drum by adjusting postgain
@@ -149,6 +150,8 @@ export default function StrudelDemo() {
         reverb={reverb}
         setReverb={setReverb}
       />
+
+      <SelectorPanel />
       {/* Status info */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>
