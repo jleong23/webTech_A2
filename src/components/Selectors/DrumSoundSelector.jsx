@@ -2,10 +2,7 @@ export default function DrumSoundSelector({ drumBank, setDrumBank }) {
   const kits = [
     "RolandTR808",
     "RolandTR909",
-    "RolandCR78",
-    "OberheimDmx",
     "KorgDDM110",
-    "YamahaPSR",
     "ElektronAnalogRytm",
   ];
 
