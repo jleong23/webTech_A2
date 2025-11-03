@@ -1,7 +1,7 @@
 /**
  * Main Container
  */
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
 import PreProessTextArea from "./PreProessTextArea";
 import ControlsPanel from "./Controls/ControlsPanel";
@@ -73,23 +73,34 @@ export default function StrudelDemo() {
     });
 
   // Build and evaluate code, applying HUSH, pattern, tempo and drum bank.
-  const buildAndEvaluate = (opts = { evaluateIfPlaying: true }) => {
-    if (!editor) return;
-    let replaced = processText(procValue, { p1Hush, reverb });
-    replaced = replaced.replaceAll(
-      "const pattern = 0",
-      `const pattern = ${pattern}`
-    );
-    // replace with selected drum bank
-    replaced = changeDrumBank(replaced, drumBank);
-    // replace with updated tempo
-    const replacedTempo = applyTempo(replaced, tempo);
-    setCode(replacedTempo);
-    // If true, update strudel code and play
-    if (opts.evaluateIfPlaying && getReplState().started) {
-      evaluate();
-    }
-  };
+  const buildAndEvaluate = useCallback(
+    (opts = { evaluateIfPlaying: true }) => {
+      if (!editor) return;
+      let replaced = processText(procValue, { p1Hush, reverb });
+      replaced = replaced.replaceAll(
+        "const pattern = 0",
+        `const pattern = ${pattern}`
+      );
+      replaced = changeDrumBank(replaced, drumBank);
+      const replacedTempo = applyTempo(replaced, tempo);
+      setCode(replacedTempo);
+      if (opts.evaluateIfPlaying && getReplState().started) {
+        evaluate();
+      }
+    },
+    [
+      procValue,
+      p1Hush,
+      reverb,
+      pattern,
+      drumBank,
+      tempo,
+      editor,
+      evaluate,
+      getReplState,
+      setCode,
+    ]
+  );
 
   // Handler for "Proc & Play" button: calls buildAndEvalute function to ensure everything is runnable.
   const handleProcAndPlay = () => {
@@ -136,16 +147,24 @@ export default function StrudelDemo() {
       toggleDrums(editor, p1Hush);
     }, 150);
     return () => clearTimeout(timer);
-  }, [p1Hush, procValue, tempo, pattern, editor, reverb, drumBank]);
+  }, [
+    p1Hush,
+    procValue,
+    tempo,
+    pattern,
+    editor,
+    reverb,
+    drumBank,
+    buildAndEvaluate,
+  ]);
 
   // Re-evaluate when drumBank changes when music is playing
   useEffect(() => {
     if (!editor) return;
     if (getReplState().started) {
-      // rebuild and re-evaluate immediately
       buildAndEvaluate({ evaluateIfPlaying: true });
     }
-  }, [drumBank, editor]);
+  }, [drumBank, editor, buildAndEvaluate, getReplState]);
 
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
@@ -167,7 +186,12 @@ export default function StrudelDemo() {
         setReverb={setReverb}
       />
 
-      <SelectorPanel drumBank={drumBank} setDrumBank={setDrumBank} />
+      <SelectorPanel
+        drumBank={drumBank}
+        setDrumBank={setDrumBank}
+        pattern={pattern}
+        setPattern={setPattern}
+      />
       {/* Status info */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>

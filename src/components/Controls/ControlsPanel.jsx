@@ -9,7 +9,6 @@ import MuteDrum from "../Controls/MuteDrum";
 import PlayStopButtons from "../Controls/PlayStopButtons";
 import ProcAndPlay from "../Controls/ProcAndPlay";
 import TempoControl from "../Controls/TempoControl";
-import DrumPatternSelector from "../Controls/DrumPatternSelector";
 import ReverbControl from "../Controls/ReverbControl";
 
 export default function ControlsPanel({
@@ -22,8 +21,6 @@ export default function ControlsPanel({
   setTempo,
   volume,
   setVolume,
-  pattern,
-  setPattern,
   reverb,
   setReverb,
 }) {
@@ -40,8 +37,6 @@ export default function ControlsPanel({
 
       {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />
-
-      <DrumPatternSelector pattern={pattern} setPattern={setPattern} />
 
       <ReverbControl reverb={reverb} setReverb={setReverb} />
     </div>
