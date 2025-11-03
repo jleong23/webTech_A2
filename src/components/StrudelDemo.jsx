@@ -62,6 +62,8 @@ export default function StrudelDemo() {
   const [reverb, setReverb] = useState(0.6);
   // state for select drum bank
   const [drumBank, setDrumBank] = useState("RolandTR808");
+  // state for select drum beat
+  const [beat, setBeat] = useState(0);
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
@@ -204,6 +206,8 @@ export default function StrudelDemo() {
         setDrumBank={setDrumBank}
         pattern={pattern}
         setPattern={setPattern}
+        beat={beat}
+        setBeat={setBeat}
       />
       {/* Status info */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
