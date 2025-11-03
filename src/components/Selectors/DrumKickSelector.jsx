@@ -2,7 +2,7 @@ export default function DrumKickSelector({ pattern, setPattern }) {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm font-semibold text-gray-300 tracking-wide">
-        Drum Pattern
+        Kick Pattern
       </label>
       <select
         value={pattern}
