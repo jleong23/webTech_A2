@@ -5,13 +5,11 @@
  * 3. Hush radio buttons to mute drums
  */
 
-import MuteDrum from "./MuteDrum";
-import PlayStopButtons from "./PlayStopButtons";
-import ProcAndPlay from "./ProcAndPlay";
-import TempoControl from "./TempoControl";
-import DrumPatternSelector from "./DrumPatternSelector";
-import ReverbControl from "./ReverbControl";
-import VolumeSlider from "./VolumeSlider";
+import MuteDrum from "../Controls/MuteDrum";
+import PlayStopButtons from "../Controls/PlayStopButtons";
+import ProcAndPlay from "../Controls/ProcAndPlay";
+import TempoControl from "../Controls/TempoControl";
+import ReverbControl from "../Controls/ReverbControl";
 
 export default function ControlsPanel({
   onPlay,
@@ -23,13 +21,11 @@ export default function ControlsPanel({
   setTempo,
   volume,
   setVolume,
-  pattern,
-  setPattern,
   reverb,
   setReverb,
 }) {
   return (
-    <div className="space-y-3">
+    <div className="p-5 space-y-6 bg-gray-900 text-white rounded-lg shadow-lg max-w-md mx-auto">
       {/* Process text and Play Song */}
       <ProcAndPlay onProcPlay={onProcPlay} />
 
@@ -41,11 +37,6 @@ export default function ControlsPanel({
 
       {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />
-
-      {/* Volume Slider */}
-      <VolumeSlider volume={volume} setVolume={setVolume} />
-
-      <DrumPatternSelector pattern={pattern} setPattern={setPattern} />
 
       <ReverbControl reverb={reverb} setReverb={setReverb} />
     </div>

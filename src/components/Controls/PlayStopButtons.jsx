@@ -3,21 +3,21 @@ import { FaPlay, FaPause } from "react-icons/fa";
 function PlayStopButtons({ onPlay, onStop }) {
   return (
     <>
-      <div className="flex gap-3">
+      <div className="flex justify-center gap-6">
         {/* Play Button */}
         <button
           onClick={onPlay}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-md transition-colors duration-200"
+          className="w-14 h-14 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg"
         >
-          <FaPlay className="w-5 h-5" />
+          <FaPlay className="w-6 h-6" />
         </button>
 
         {/* Stop Button */}
         <button
           onClick={onStop}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 text-white shadow-md transition-colors duration-200"
+          className="w-14 h-14 rounded-full bg-gray-800 hover:bg-gray-700 text-white flex items-center justify-center shadow-lg"
         >
-          <FaPause className="w-5 h-5" />
+          <FaPause className="w-6 h-6" />
         </button>
       </div>
     </>

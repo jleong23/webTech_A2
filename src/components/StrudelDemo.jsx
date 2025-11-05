@@ -1,7 +1,7 @@
 /**
  * Main Container
  */
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
 import PreProessTextArea from "./PreProessTextArea";
 import ControlsPanel from "./Controls/ControlsPanel";
@@ -9,6 +9,7 @@ import PianoRollCanvas from "./PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import { processText } from "../utils/processText";
+import SelectorPanel from "./Selectors/SelectorPanel";
 
 /**
  * - Toggles (mute/unmute) drum by adjusting postgain
@@ -36,6 +37,13 @@ function applyTempo(code, tempo) {
     .join("\n"); // rejoin the lines back into one string
 }
 
+/**
+ * function to change drum sound by replacing .bank(..)
+ */
+function changeDrumBank(code, bankName) {
+  return code.replace(/\.bank\([^)]*\)/g, `.bank("${bankName}")`);
+}
+
 export default function StrudelDemo() {
   // Refs to DOM elements used by the Strudel editor
   const editorRootRef = useRef(null);
@@ -54,6 +62,8 @@ export default function StrudelDemo() {
   const [reverb, setReverb] = useState(0.6);
   // stat for volume control ( 50 as default volume)
   const [volume, setVolume] = useState(50);
+  // state for select drum bank
+  const [drumBank, setDrumBank] = useState("RolandTR808");
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
@@ -64,16 +74,49 @@ export default function StrudelDemo() {
       initialCode: procValue,
     });
 
-  // Handler for "Proc & Play" button: preprocess, apply temppo, and update into editor.
-  const handleProcAndPlay = () => {
-    let replaced = processText(procValue, { p1Hush, reverb });
+  /**
+   * BuildAndEvaluate:
+   * - Applying HUSH
+   * - Select drum kick pattern
+   * - Current tempo
+   * - Select drum bank.
+   * - Reverb value
+   * After processing the code, it updates the editor via setCode.
+   * useCallBack: prevent useEffect from trigger unnecessarily.
+   */
+  const buildAndEvaluate = useCallback(
+    (opts = { evaluateIfPlaying: true }) => {
+      if (!editor) return;
+      let replaced = processText(procValue, { p1Hush, reverb }); // apply HUSH & reverb effect
+      replaced = replaced.replaceAll(
+        "const pattern = 0",
+        `const pattern = ${pattern}`
+      ); // Update drum pattern
+      replaced = changeDrumBank(replaced, drumBank); // Update drumBank
+      const replacedTempo = applyTempo(replaced, tempo); // Update tempo
+      setCode(replacedTempo); // update editor with processed code
+      // If music is currently playing, re-evaluate to update playback
+      if (opts.evaluateIfPlaying && getReplState().started) {
+        evaluate();
+      }
+    },
+    [
+      procValue,
+      p1Hush,
+      reverb,
+      pattern,
+      drumBank,
+      tempo,
+      editor,
+      evaluate,
+      getReplState,
+      setCode,
+    ]
+  );
 
-    replaced = replaced.replaceAll(
-      "const pattern = 0",
-      `const pattern = ${pattern}`
-    );
-    const replacedTempo = applyTempo(replaced, tempo);
-    setCode(replacedTempo);
+  // Handler for "Proc & Play" button: calls buildAndEvalute function to ensure everything is runnable.
+  const handleProcAndPlay = () => {
+    buildAndEvaluate({ evaluateIfPlaying: false });
     evaluate();
   };
 
@@ -102,33 +145,22 @@ export default function StrudelDemo() {
   }, []);
 
   /**
-   * When p1Hush, procValue or tempo changes, it:
-   * 1. Process the text ( to apply HUSH )
-   * 2. Apply tempo changes
-   * 3. Set it into editor
-   * 4. If music is playing, it re-evaluate to update playback and toggle drums as needed
+   * Update editor when changes made:
+   * 1. p1Hush (mute/unmute drums)
+   * 2. tempo
+   * 3. pattern
+   * 4. reverb
+   * 5. drumBank
+   * .6 procValue (main Strudel code)
    */
   useEffect(() => {
     if (!editor) return;
-
-    // Use timeOuts to debounce tempo changes to prevent choppy playbacks
+    // Timeout ensures smooth updates without interrupting user typing.
     const timer = setTimeout(() => {
-      let replaced = processText(procValue, { p1Hush, reverb });
-
-      replaced = replaced.replaceAll(
-        "const pattern = 0",
-        `const pattern = ${pattern}`
-      );
-      const replacedTempo = applyTempo(replaced, tempo);
-      setCode(replacedTempo);
-      // Apply immediately if music is already playing
-      if (getReplState().started) {
-        evaluate(); // re-evaluate code
-        toggleDrums(editor, p1Hush); // mute/unmute drums
-      }
-    }, 200);
-
-    // Clean up to cancel previous timer if slider is used again
+      buildAndEvaluate({ evaluateIfPlaying: true });
+      // Sync drum mute/unmute according to p1Hush
+      toggleDrums(editor, p1Hush);
+    }, 150);
     return () => clearTimeout(timer);
   }, [
     p1Hush,
@@ -137,16 +169,22 @@ export default function StrudelDemo() {
     pattern,
     editor,
     reverb,
-    volume,
-    evaluate,
-    setCode,
-    getReplState,
+    drumBank,
+    buildAndEvaluate,
   ]);
 
+  // Re-evaluate when drumBank changes when music is playing to ensure drumKit updates sound immediately
+  useEffect(() => {
+    if (!editor) return;
+    if (getReplState().started) {
+      buildAndEvaluate({ evaluateIfPlaying: true });
+    }
+  }, [drumBank, editor, buildAndEvaluate, getReplState]);
+
   return (
-    <div className="p-4">
-      <h2 className="text-slate-500 text-center my-3 font-bold">
-        Strudel Demo
+    <div className="p-6 bg-gray-900 min-h-screen text-white">
+      <h2 className="text-5xl font-bold text-red-500 text-center">
+        Strudel Mixer
       </h2>
 
       <ControlsPanel
@@ -165,25 +203,30 @@ export default function StrudelDemo() {
         setVolume={setVolume}
       />
 
-      <div className="space-y-4">
-        <div className="mt-4 text-xs text-gray-500">
-          <div>Editor ready: {ready ? "yes" : "no"}</div>
-          <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
-        </div>
+      <SelectorPanel
+        drumBank={drumBank}
+        setDrumBank={setDrumBank}
+        pattern={pattern}
+        setPattern={setPattern}
+      />
+      {/* Status info */}
+      <div className="mt-2  text-gray-200 flex justify-center gap-6">
+        <div>Editor ready: {ready ? "yes" : "no"}</div>
+        <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
       </div>
 
-      <div className=" w-full">
-        <div className="space-y-3">
-          <PreProessTextArea
-            procValue={procValue}
-            onProcChange={setProcValue}
-            procRef={procRef}
-            editorRootRef={editorRootRef}
-            outputRootRef={outputRootRef}
-          />{" "}
+      {/* Editor  */}
+      <div className="mt-6 space-y-6">
+        <PreProessTextArea
+          procValue={procValue}
+          onProcChange={setProcValue}
+          procRef={procRef}
+          editorRootRef={editorRootRef}
+          outputRootRef={outputRootRef}
+        />{" "}
+        <div>
+          <PianoRollCanvas canvasRef={canvasRef} />
         </div>
-
-        <PianoRollCanvas canvasRef={canvasRef} />
       </div>
     </div>
   );
