@@ -10,6 +10,7 @@ import PlayStopButtons from "../Controls/PlayStopButtons";
 import ProcAndPlay from "../Controls/ProcAndPlay";
 import TempoControl from "../Controls/TempoControl";
 import ReverbControl from "../Controls/ReverbControl";
+import VolumeSlider from "./VolumeSlider";
 
 export default function ControlsPanel({
   onPlay,
@@ -39,6 +40,8 @@ export default function ControlsPanel({
       <TempoControl tempo={tempo} setTempo={setTempo} />
 
       <ReverbControl reverb={reverb} setReverb={setReverb} />
+
+      <VolumeSlider volume={volume} setVolume={setVolume} />
     </div>
   );
 }
