@@ -18,5 +18,8 @@ export function processText(text, options = { p1Hush: false, reverb: 0.6 }) {
   // reverb handler
   result = result.replaceAll("<reverb>", options.reverb);
 
+  // volume handler
+  result = result.replaceAll("<volume>", options.volume);
+
   return result;
 }

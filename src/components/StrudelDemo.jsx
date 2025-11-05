@@ -61,7 +61,7 @@ export default function StrudelDemo() {
   // state for reverb control ( 0.6 as default reverb )
   const [reverb, setReverb] = useState(0.6);
   // stat for volume control ( 50 as default volume)
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(1);
   // state for select drum bank
   const [drumBank, setDrumBank] = useState("RolandTR808");
 
@@ -87,7 +87,7 @@ export default function StrudelDemo() {
   const buildAndEvaluate = useCallback(
     (opts = { evaluateIfPlaying: true }) => {
       if (!editor) return;
-      let replaced = processText(procValue, { p1Hush, reverb }); // apply HUSH & reverb effect
+      let replaced = processText(procValue, { p1Hush, reverb, volume }); // apply HUSH & reverb effect
       replaced = replaced.replaceAll(
         "const pattern = 0",
         `const pattern = ${pattern}`
@@ -107,6 +107,7 @@ export default function StrudelDemo() {
       pattern,
       drumBank,
       tempo,
+      volume,
       editor,
       evaluate,
       getReplState,
@@ -151,7 +152,8 @@ export default function StrudelDemo() {
    * 3. pattern
    * 4. reverb
    * 5. drumBank
-   * .6 procValue (main Strudel code)
+   * 6. volume
+   * 7. procValue (main Strudel code)
    */
   useEffect(() => {
     if (!editor) return;
@@ -171,6 +173,7 @@ export default function StrudelDemo() {
     reverb,
     drumBank,
     buildAndEvaluate,
+    volume,
   ]);
 
   // Re-evaluate when drumBank changes when music is playing to ensure drumKit updates sound immediately

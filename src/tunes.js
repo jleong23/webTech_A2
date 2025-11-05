@@ -42,10 +42,9 @@ const bass = 0
 bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
-.postgain(2)
+.gain(<volume>)
 .room(<reverb>)
 .lpf(700)
-.room(<reverb>)
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -56,13 +55,14 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .adsr("0:0:.5:.1")
 .room(<reverb>)
 .lpenv(3.3)
+.gain(<volume>)
 .postgain(pick(gain_patterns, pattern))
 
 
 <p1_Radio>drums:
 stack(
   s("tech:5")
-  .postgain(6)
+  .postgain(6 * <volume>)
   .pcurve(2)
   .pdec(1)
   .struct(pick(drum_structure, pattern)),
@@ -75,13 +75,13 @@ stack(
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
-)
+).gain(<volume>)
 
 drums2: 
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
   s("hh").struct("x*16").bank("RolandTR808")
-  .gain(0.6)
+  .gain(0.6 * <volume>)
   .jux(rev)
   .room(<reverb>)
   .postgain(0.5),
@@ -92,7 +92,7 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-)
+).gain(<volume>)
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())

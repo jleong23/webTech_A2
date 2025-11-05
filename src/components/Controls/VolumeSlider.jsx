@@ -5,9 +5,10 @@ export default function VolumeSlider({ volume, setVolume }) {
       <input
         type="range"
         min="0"
-        max="100"
+        max="1"
+        step="0.1"
         value={volume}
-        onChange={(e) => setVolume(Number(e.target.value))}
+        onChange={(e) => setVolume(parseFloat(e.target.value))}
         className="w-full accent-red-600 cursor-pointer"
       />
     </div>
