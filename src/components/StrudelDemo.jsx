@@ -3,12 +3,12 @@
  */
 import { useRef, useEffect, useState, useCallback } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
-import PreProessTextArea from "./PreProessTextArea";
+import PreProessTextArea from "./Editor/PreProessTextArea";
 import ControlsPanel from "./Controls/ControlsPanel";
-import PianoRollCanvas from "./PianoRollCanvas";
+import PianoRollCanvas from "./Canvas/PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
-import { processText } from "../utils/processText";
+import { processText } from "../utils/audioProcess";
 import SelectorPanel from "./Selectors/SelectorPanel";
 
 /**
