@@ -3,9 +3,8 @@
  * - Creates and manage Strudel editor via StrudelMirror
  * - It set up audio and sound modules
  * - Draws a visual representation (pianoroll)
- * - Plays / stop music code
- * returns ( evaluate, stop, setCode )
- *
+ * - Provides functions to play, stop, and set code
+ * Returns: { editor, evaluate, stop, setCode, ready, getReplState }
  */
 import { useEffect, useRef, useState, useCallback } from "react";
 import { StrudelMirror } from "@strudel/codemirror"; // CodeMirror text editor component
@@ -35,10 +34,9 @@ export default function useStrudelEditor({
 
     // Canvas for drawing piano roll
     const canvas = canvasRef.current;
-
-    //! ?
     const context = canvas ? canvas.getContext("2d") : null;
-    const drawTime = [-2, 2];
+    const drawTime = [-2, 2]; // Time range (seconds) shown on the pianoroll
+
     if (canvas) {
       canvas.width = (canvas.clientWidth || 400) * 2;
       canvas.height = (canvas.clientHeight || 150) * 2;
@@ -75,7 +73,7 @@ export default function useStrudelEditor({
       outputRoot: outputRootRef?.current ?? undefined,
     });
 
-    if (initialCode) editorRef.current.setCode(initialCode);
+    if (initialCode) editorRef.current.setCode(initialCode); // Set initial code
 
     setReady(true);
 

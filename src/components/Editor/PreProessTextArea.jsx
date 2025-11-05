@@ -2,7 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi"; // import the chevron icon
 
 /**
- * EditorPanel: This holds the textArea(proc input)
+ * PreProcessTextArea: A collapsible editor panel for preprocessing text.
+ *
+ * Props:
+ * - procValue: The current value of the text input (controlled component)
+ * - onProcChange: Callback to update the text input
+ * - procRef: Ref to the <textarea> element
+ * - editorRootRef: Ref to the editor output container
+ * - outputRootRef: Ref to additional output container (optional)
  */
 export default function PreProessTextArea({
   procValue,
@@ -12,9 +19,10 @@ export default function PreProessTextArea({
   outputRootRef,
 }) {
   const [show, setShow] = useState(true);
-  const containerRef = useRef(null);
-  const [maxHeight, setMaxHeight] = useState("0px");
+  const containerRef = useRef(null); // Ref to the collapsible div
+  const [maxHeight, setMaxHeight] = useState("0px"); // for smooth collapse/expand
 
+  // Adjust maxHeight according to show state
   useEffect(() => {
     if (show && containerRef.current) {
       setMaxHeight(`${containerRef.current.scrollHeight}px`);
@@ -22,6 +30,7 @@ export default function PreProessTextArea({
       setMaxHeight("0px");
     }
   }, [show]);
+
   return (
     <div className="mt-4">
       {/* Toggle show Button */}
@@ -37,7 +46,7 @@ export default function PreProessTextArea({
         />
       </button>
 
-      {/* Collapsible div */}
+      {/* Collapsible Panel */}
       <div
         ref={containerRef}
         style={{ maxHeight }}

@@ -1,8 +1,21 @@
 /**
- * ControlPanel:
- * 1. Slider controls to set Tempo
- * 2. Play / Stop / Proc controls
- * 3. Hush radio buttons to mute drums
+ * ControlsPanel:
+ * Features:
+ * 1. Process & play preprocessed text (ProcAndPlay)
+ * 2. Play / Stop buttons for playback (PlayStopButtons)
+ * 3. Mute/hush drums option (MuteDrum)
+ * 4. Tempo adjustment slider (TempoControl)
+ * 5. Reverb adjustment slider (ReverbControl)
+ * 6. Volume adjustment slider (VolumeSlider)
+ *
+ * Props:
+ * - onPlay: Callback to start playback
+ * - onStop: Callback to stop playback
+ * - onProcPlay: Callback to play processed text
+ * - p1Hush / setP1Hush: State for muting drums
+ * - tempo / setTempo: State for tempo value
+ * - volume / setVolume: State for volume
+ * - reverb / setReverb: State for reverb amount
  */
 
 import MuteDrum from "../Controls/MuteDrum";
@@ -39,8 +52,10 @@ export default function ControlsPanel({
       {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />
 
+      {/* Reverb Control slider */}
       <ReverbControl reverb={reverb} setReverb={setReverb} />
 
+      {/* Volume Control slider */}
       <VolumeSlider volume={volume} setVolume={setVolume} />
     </div>
   );
