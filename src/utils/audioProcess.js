@@ -1,7 +1,7 @@
 /**
  *  useStrudelEditor: A util that takes raw Strudel Code (as text) & replaces certain placeholders with actual values depends on user option
  */
-export function processText(text, options = { p1Hush: false, reverb: 0.6 }) {
+export function audioProcess(text, options = { p1Hush: false, reverb: 0.6 }) {
   if (!text) return ""; // returns empty string if no input
   let result = text;
 

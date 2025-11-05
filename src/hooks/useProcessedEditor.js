@@ -1,4 +1,4 @@
-import { processText } from "../utils/audioProcess";
+import { audioProcess } from "../utils/audioProcess";
 import { changeDrumBank, applyTempo } from "../utils/editorHelpers";
 /**
  * BuildAndEvaluate:
@@ -29,7 +29,7 @@ export function buildAndEvaluate(
   if (!editor) return;
 
   // Apply Hush & reverb effect
-  let replaced = processText(procValue, { p1Hush, reverb, volume });
+  let replaced = audioProcess(procValue, { p1Hush, reverb, volume });
 
   // Update drum pattern
   replaced = replaced.replaceAll(
