@@ -29,7 +29,7 @@ export default function VolumeSlider({ volume, setVolume }) {
       </label>
 
       {/* Radio Buttons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-1">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
