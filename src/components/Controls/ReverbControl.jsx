@@ -1,7 +1,7 @@
 export default function ReverbControl({ reverb = 0, setReverb }) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-bold text-red-500">
+      <label className="font-bold text-gray-200">
         Reverb: {reverb.toFixed(2)}
       </label>
 

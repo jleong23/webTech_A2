@@ -24,6 +24,7 @@ import ProcAndPlay from "../Controls/ProcAndPlay";
 import TempoControl from "../Controls/TempoControl";
 import ReverbControl from "../Controls/ReverbControl";
 import VolumeSlider from "./VolumeSlider";
+import SaveJSON from "../SaveChanges/SaveJSON";
 
 export default function ControlsPanel({
   onPlay,
@@ -37,10 +38,11 @@ export default function ControlsPanel({
   setVolume,
   reverb,
   setReverb,
+  saveToJson,
+  loadFromJson,
 }) {
   return (
     <div className="p-5 space-y-6 bg-gray-900 text-white rounded-lg shadow-lg max-w-xl mx-auto">
-      {/* Process text and Play Song */}
       <ProcAndPlay onProcPlay={onProcPlay} />
 
       {/* Play / Stop */}
@@ -57,6 +59,12 @@ export default function ControlsPanel({
 
       {/* Volume Control slider */}
       <VolumeSlider volume={volume} setVolume={setVolume} />
+
+      <SaveJSON
+        saveToJson={saveToJson}
+        loadFromJson={loadFromJson}
+        className=""
+      />
     </div>
   );
 }

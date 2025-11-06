@@ -14,7 +14,7 @@ export default function TempoControl({ tempo, setTempo }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-bold text-red-500">Tempo: {tempo} BPM</label>
+      <label className="font-bold text-gray-200">Tempo: {tempo} BPM</label>
 
       {/* Slider updates immediately */}
       <input

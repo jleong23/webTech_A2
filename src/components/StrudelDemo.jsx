@@ -11,6 +11,7 @@ import { stranger_tune } from "../tunes";
 import SelectorPanel from "./Selectors/SelectorPanel";
 import { buildAndEvaluate } from "../hooks/useProcessedEditor";
 import usePlaybackControls from "../hooks/usePlaybackControls";
+import useSaveJSON from "../hooks/useSaveJSON";
 
 export default function StrudelDemo() {
   // Refs to DOM elements used by the Strudel editor
@@ -18,6 +19,18 @@ export default function StrudelDemo() {
   const outputRootRef = useRef(null);
   const canvasRef = useRef(null);
   const procRef = useRef(null);
+
+  function getCurrentState() {
+    return {
+      hush,
+      tempo,
+      pattern,
+      reverb,
+      volume,
+      drumBank,
+      procValue,
+    };
+  }
 
   const [procValue, setProcValue] = useState(stranger_tune || "");
 
@@ -37,6 +50,17 @@ export default function StrudelDemo() {
   const [volume, setVolume] = useState(1); // stat for volume control
 
   const [drumBank, setDrumBank] = useState("RolandTR808"); // state for select drum bank
+
+  const { saveToJson, loadFromJson } = useSaveJSON({
+    getCurrentState,
+    setHush,
+    setTempo,
+    setPattern,
+    setReverb,
+    setVolume,
+    setDrumBank,
+    setProcValue,
+  });
 
   // Hook that mounts Strudel editor
   const { evaluate, stop, setCode, ready, getReplState, editor } =
@@ -142,12 +166,12 @@ export default function StrudelDemo() {
         setHush={setHush}
         tempo={tempo}
         setTempo={setTempo}
-        pattern={pattern}
-        setPattern={setPattern}
-        reverb={reverb}
-        setReverb={setReverb}
         volume={volume}
         setVolume={setVolume}
+        reverb={reverb}
+        setReverb={setReverb}
+        saveToJson={saveToJson}
+        loadFromJson={loadFromJson}
       />
 
       <SelectorPanel
