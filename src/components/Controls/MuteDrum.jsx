@@ -22,7 +22,7 @@ export default function MuteDrum({ p1Hush, setP1Hush }) {
             onChange={() => setP1Hush(true)}
             className="w-5 h-5 accent-red-600"
           />
-          HUSH
+          MUTE DRUMS
         </label>
       </div>
     </div>

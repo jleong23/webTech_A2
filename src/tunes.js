@@ -77,7 +77,7 @@ stack(
   .postgain(.25),
 ).gain(<volume>)
 
-drums2: 
+<p1_Radio>drums2: 
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
   s("hh").struct("x*16").bank("RolandTR808")
