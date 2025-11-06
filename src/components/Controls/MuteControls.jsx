@@ -2,7 +2,7 @@ export default function MuteControls({ hush, setHush }) {
   const toggle = (key) => setHush((prev) => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <div className="p-4 bg-gray-800 rounded-lg shadow-md w-full max-w-sm mx-auto">
+    <div className="p-4 bg-gray-800 rounded-lg shadow-md w-full max-w-xl mx-auto">
       <h3 className="text-lg font-bold text-red-500 mb-3">Hush (Mute)</h3>
 
       <div className="flex flex-col gap-3">
