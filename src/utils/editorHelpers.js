@@ -9,6 +9,19 @@ export const toggleDrums = (editor, mute) => {
   if (drums) drums.postgain(mute ? 0 : 1);
   if (drums2) drums2.postgain(mute ? 0 : 1);
 };
+
+export const toggleArp = (editor, mute) => {
+  if (!editor?.repl) return;
+  const arp = editor.repl.state.scope?.arp;
+  if (arp) arp.postgain(mute ? 0 : 1);
+};
+
+export const toggleBass = (editor, mute) => {
+  if (!editor?.repl) return;
+  const bass = editor.repl.state.scope?.bass;
+  if (bass) bass.postgain(mute ? 0 : 1);
+};
+
 /**
  * function to apply tempo to track
  */

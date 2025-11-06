@@ -17,7 +17,7 @@ export function buildAndEvaluate(
     evaluate,
     getReplState,
     procValue,
-    p1Hush,
+    hush,
     reverb,
     volume,
     pattern,
@@ -29,7 +29,13 @@ export function buildAndEvaluate(
   if (!editor) return;
 
   // Apply Hush & reverb effect
-  let replaced = audioProcess(procValue, { p1Hush, reverb, volume });
+  let replaced = audioProcess(procValue, {
+    p1Hush: hush.drums,
+    p2Hush: hush.bass,
+    p3Hush: hush.arps,
+    reverb,
+    volume,
+  });
 
   // Update drum pattern
   replaced = replaced.replaceAll(

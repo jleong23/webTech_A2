@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { buildAndEvaluate } from "./useProcessedEditor";
-import { toggleDrums } from "../utils/editorHelpers";
+import { toggleDrums, toggleArp, toggleBass } from "../utils/editorHelpers";
 
 export default function usePlaybackControls({
   editor,
@@ -9,7 +9,7 @@ export default function usePlaybackControls({
   stop,
   getReplState,
   procValue,
-  p1Hush,
+  hush,
   reverb,
   volume,
   pattern,
@@ -25,7 +25,7 @@ export default function usePlaybackControls({
         evaluate,
         getReplState,
         procValue,
-        p1Hush,
+        hush,
         reverb,
         volume,
         pattern,
@@ -41,7 +41,7 @@ export default function usePlaybackControls({
     evaluate,
     getReplState,
     procValue,
-    p1Hush,
+    hush,
     reverb,
     volume,
     pattern,
@@ -59,15 +59,17 @@ export default function usePlaybackControls({
     stop();
   }, [stop]);
 
-  // Optional: toggle drums immediately on Hush change
-  const syncDrums = useCallback(() => {
-    toggleDrums(editor, p1Hush);
-  }, [editor, p1Hush]);
+  const syncMuteStates = useCallback(() => {
+    if (!editor) return;
+    toggleDrums(editor, hush.drums);
+    toggleBass(editor, hush.bass);
+    toggleArp(editor, hush.arps);
+  }, [editor, hush]);
 
   return {
     handleProcAndPlay,
     handlePlay,
     handleStop,
-    syncDrums,
+    syncMuteStates,
   };
 }

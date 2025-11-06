@@ -9,7 +9,6 @@ import PianoRollCanvas from "./Canvas/PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import SelectorPanel from "./Selectors/SelectorPanel";
-import { toggleDrums } from "../utils/editorHelpers";
 import { buildAndEvaluate } from "../hooks/useProcessedEditor";
 import usePlaybackControls from "../hooks/usePlaybackControls";
 
@@ -21,7 +20,13 @@ export default function StrudelDemo() {
   const procRef = useRef(null);
 
   const [procValue, setProcValue] = useState(stranger_tune || "");
-  const [p1Hush, setP1Hush] = useState(false); // Hush toggle for drums
+
+  const [hush, setHush] = useState({
+    // state for mute instruments
+    drums: false,
+    bass: false,
+    arps: false,
+  });
 
   const [tempo, setTempo] = useState(140); // State for tempo ( 140bpm as default )
 
@@ -42,20 +47,21 @@ export default function StrudelDemo() {
       initialCode: procValue,
     });
 
-  const { handleProcAndPlay, handlePlay, handleStop } = usePlaybackControls({
-    editor,
-    setCode,
-    evaluate,
-    stop,
-    getReplState,
-    procValue,
-    p1Hush,
-    reverb,
-    volume,
-    pattern,
-    drumBank,
-    tempo,
-  });
+  const { handleProcAndPlay, handlePlay, handleStop, syncMuteStates } =
+    usePlaybackControls({
+      editor,
+      setCode,
+      evaluate,
+      stop,
+      getReplState,
+      procValue,
+      hush,
+      reverb,
+      volume,
+      pattern,
+      drumBank,
+      tempo,
+    });
 
   // Run console monkey patch and d3Date listener once
   useEffect(() => {
@@ -93,7 +99,7 @@ export default function StrudelDemo() {
           evaluate,
           getReplState,
           procValue,
-          p1Hush,
+          hush,
           reverb,
           volume,
           pattern,
@@ -104,7 +110,7 @@ export default function StrudelDemo() {
       );
 
       // Sync drum mute/unmute according to p1Hush
-      toggleDrums(editor, p1Hush);
+      syncMuteStates();
     }, 150);
 
     return () => clearTimeout(timer); // cleanup timeout if dependencies change
@@ -114,7 +120,7 @@ export default function StrudelDemo() {
     evaluate,
     getReplState,
     procValue,
-    p1Hush,
+    hush,
     reverb,
     volume,
     pattern,
@@ -132,8 +138,8 @@ export default function StrudelDemo() {
         onPlay={handlePlay}
         onStop={handleStop}
         onProcPlay={handleProcAndPlay}
-        p1Hush={p1Hush}
-        setP1Hush={setP1Hush}
+        hush={hush}
+        setHush={setHush}
         tempo={tempo}
         setTempo={setTempo}
         pattern={pattern}

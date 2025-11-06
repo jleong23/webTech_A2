@@ -18,7 +18,7 @@
  * - reverb / setReverb: State for reverb amount
  */
 
-import MuteDrum from "../Controls/MuteDrum";
+import MuteControls from "./MuteControls";
 import PlayStopButtons from "../Controls/PlayStopButtons";
 import ProcAndPlay from "../Controls/ProcAndPlay";
 import TempoControl from "../Controls/TempoControl";
@@ -29,8 +29,8 @@ export default function ControlsPanel({
   onPlay,
   onStop,
   onProcPlay,
-  p1Hush,
-  setP1Hush,
+  hush,
+  setHush,
   tempo,
   setTempo,
   volume,
@@ -47,7 +47,7 @@ export default function ControlsPanel({
       <PlayStopButtons onPlay={onPlay} onStop={onStop} />
 
       {/* Mute drums Button */}
-      <MuteDrum p1Hush={p1Hush} setP1Hush={setP1Hush} />
+      <MuteControls hush={hush} setHush={setHush} />
 
       {/* Tempo Change slider */}
       <TempoControl tempo={tempo} setTempo={setTempo} />

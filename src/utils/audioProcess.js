@@ -8,14 +8,12 @@ export function audioProcess(
   if (!text) return ""; // returns empty string if no input
   let result = text;
 
-  // replace token <p1_Radio> with _ if true or empty string depending on hush
-  const muteDrums = options.p1Hush ? "_" : ""; // use option for future extendsion with other features
+  const muteDrums = options.p1Hush ? "_" : ""; // keep as-is
+  const muteBass = options.p2Hush ? "//" : "";
+  const muteArp = options.p3Hush ? "//" : "";
+
   result = result.replaceAll("<p1_Radio>", muteDrums);
-
-  const muteBass = options.p2Hush ? "_" : ""; // use option for future extendsion with other features
   result = result.replaceAll("<p2_Radio>", muteBass);
-
-  const muteArp = options.p3Hush ? "_" : ""; // use option for future extendsion with other features
   result = result.replaceAll("<p3_Radio>", muteArp);
 
   // reverb handler
