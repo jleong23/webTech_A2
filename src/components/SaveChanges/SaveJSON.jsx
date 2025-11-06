@@ -5,12 +5,12 @@ export default function SaveJSON({ saveToJson, loadFromJson }) {
     <div className="flex gap-3">
       <button
         onClick={saveToJson}
-        className="bg-gray-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-sm transition-colors duration-150"
+        className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow-sm transition-colors duration-150"
       >
         <FaSave size={25} />
       </button>
 
-      <label className="bg-gray-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-sm cursor-pointer transition-colors duration-150">
+      <label className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow-sm cursor-pointer transition-colors duration-150">
         <CiSaveUp2 size={25} />
         <input
           type="file"

@@ -12,6 +12,7 @@ import SelectorPanel from "./Selectors/SelectorPanel";
 import { buildAndEvaluate } from "../hooks/useProcessedEditor";
 import usePlaybackControls from "../hooks/usePlaybackControls";
 import useSaveJSON from "../hooks/useSaveJSON";
+import SaveJSON from "./SaveChanges/SaveJSON";
 
 export default function StrudelDemo() {
   // Refs to DOM elements used by the Strudel editor
@@ -184,6 +185,14 @@ export default function StrudelDemo() {
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>
         <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
+      </div>
+
+      <div className="mt-4 flex justify-end">
+        <SaveJSON
+          saveToJson={saveToJson}
+          loadFromJson={loadFromJson}
+          className=""
+        />
       </div>
 
       {/* Editor  */}
