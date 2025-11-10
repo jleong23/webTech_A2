@@ -7,6 +7,7 @@ export default function useSaveJSON({
   setVolume,
   setDrumBank,
   setProcValue,
+  setStatusMessage,
 }) {
   {
     function saveToJson() {
@@ -20,6 +21,8 @@ export default function useSaveJSON({
       a.download = "strudel_state.json";
       a.click();
       URL.revokeObjectURL(url);
+
+      if (setStatusMessage) setStatusMessage("✅ Save Succesfully!");
     }
 
     function loadFromJson(file) {
@@ -34,9 +37,10 @@ export default function useSaveJSON({
           if (data.volume !== undefined) setVolume(data.volume);
           if (data.drumBank) setDrumBank(data.drumBank);
           if (data.procValue) setProcValue(data.procValue);
-          alert("JSON state loaded successfully!");
+
+          if (setStatusMessage) setStatusMessage("✅ JSON Loaded Succesfully!");
         } catch (err) {
-          alert("Invalid JSON file.");
+          setStatusMessage("❌ Invalid JSON file.");
           console.error(err);
         }
       };

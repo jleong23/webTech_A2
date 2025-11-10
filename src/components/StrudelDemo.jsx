@@ -52,6 +52,8 @@ export default function StrudelDemo() {
 
   const [drumBank, setDrumBank] = useState("RolandTR808"); // state for select drum bank
 
+  const [statusMessage, setStatusMessage] = useState("");
+
   const { saveToJson, loadFromJson } = useSaveJSON({
     getCurrentState,
     setHush,
@@ -61,6 +63,7 @@ export default function StrudelDemo() {
     setVolume,
     setDrumBank,
     setProcValue,
+    setStatusMessage,
   });
 
   // Hook that mounts Strudel editor
@@ -191,7 +194,7 @@ export default function StrudelDemo() {
         <SaveJSON
           saveToJson={saveToJson}
           loadFromJson={loadFromJson}
-          className=""
+          statusMessage={statusMessage}
         />
       </div>
 
