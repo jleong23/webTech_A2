@@ -36,11 +36,11 @@ export default function PreProessTextArea({
       {/* Toggle show Button */}
       <button
         onClick={() => setShow(!show)}
-        className="mb-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none flex items-center gap-2"
+        className="mb-3 px-6 py-3 bg-red-600/80 backdrop-blur-sm text-white font-accent font-semibold rounded-2xl shadow-md hover:bg-red-600/100 focus:outline-none flex items-center gap-3 transition-all duration-300"
       >
         <span>{show ? "Hide Editor Panel" : "Show Editor Panel"}</span>
         <FiChevronDown
-          className={`w-5 h-5 transition-transform duration-300 ${
+          className={`w-6 h-6 transition-transform duration-300 ${
             show ? "rotate-180" : "rotate-0"
           }`}
         />
@@ -50,12 +50,12 @@ export default function PreProessTextArea({
       <div
         ref={containerRef}
         style={{ maxHeight }}
-        className="overflow-hidden transition-all duration-300"
+        className="overflow-hidden transition-all duration-300 "
       >
         <div className="grid md:grid-cols-2 gap-4 mt-4 items-start">
           {/* Text Area Input */}
           <div className="flex flex-col">
-            <label className="block font-semibold text-red-500 mb-2">
+            <label className="block font-accent font-semibold text-red-500 mb-2">
               Text to preprocess:
             </label>
             <textarea
@@ -69,12 +69,12 @@ export default function PreProessTextArea({
 
           {/* Editor output */}
           <div className="flex flex-col">
-            <label className="block font-semibold text-red-500 mb-2">
+            <label className="block font-accent font-semibold text-red-500 mb-2">
               Output
             </label>
             <div
               ref={editorRootRef}
-              className="border border-gray-700 rounded-xl overflow-y-auto h-96 p-2"
+              className="border border-gray-700 rounded-2xl overflow-y-auto h-96 p-4 scrollbar-thin scrollbar-thumb-red-500/60 scrollbar-track-gray-900/50"
             />
             <div ref={outputRootRef} />
           </div>

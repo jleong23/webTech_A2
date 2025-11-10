@@ -1,5 +1,6 @@
 import DrumSoundSelector from "./DrumSoundSelector";
 import DrumPatternSelector from "./DrumPatternSelector";
+
 export default function SelectorPanel({
   drumBank,
   setDrumBank,
@@ -7,8 +8,8 @@ export default function SelectorPanel({
   setPattern,
 }) {
   return (
-    <div className="mt-4 p-5 bg-gray-800 rounded-2xl shadow-md border border-gray-700">
-      <h3 className="text-lg font-bold text-red-400 mb-3 tracking-wide uppercase">
+    <div className="mt-4 p-5 bg-gray-800/70 rounded-2xl shadow-panel border border-gray-600 backdrop-blur-xl">
+      <h3 className="text-lg font-accent text-red-400 mb-4 tracking-wide uppercase">
         Drum Controls
       </h3>
 
