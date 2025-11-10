@@ -156,6 +156,12 @@ export default function StrudelDemo() {
     tempo,
   ]);
 
+  useEffect(() => {
+    if (!statusMessage) return;
+    const timer = setTimeout(() => setStatusMessage(""), 2000);
+    return () => clearTimeout(timer);
+  }, [statusMessage]);
+
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <h2 className="text-5xl font-bold text-red-500 text-center">

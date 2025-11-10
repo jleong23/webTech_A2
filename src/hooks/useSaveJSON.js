@@ -22,7 +22,7 @@ export default function useSaveJSON({
       a.click();
       URL.revokeObjectURL(url);
 
-      if (setStatusMessage) setStatusMessage("✅ Save Succesfully!");
+      if (setStatusMessage) setStatusMessage("Succesfully Save!");
     }
 
     function loadFromJson(file) {
@@ -38,7 +38,7 @@ export default function useSaveJSON({
           if (data.drumBank) setDrumBank(data.drumBank);
           if (data.procValue) setProcValue(data.procValue);
 
-          if (setStatusMessage) setStatusMessage("✅ JSON Loaded Succesfully!");
+          if (setStatusMessage) setStatusMessage("Successfully Loaded!");
         } catch (err) {
           setStatusMessage("❌ Invalid JSON file.");
           console.error(err);
