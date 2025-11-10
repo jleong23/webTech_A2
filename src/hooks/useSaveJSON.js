@@ -1,3 +1,11 @@
+/**
+ * Custom hook to handle saving and loading Strudel app state as JSON.
+ *
+ * Props:
+ * - getCurrentState: Function that returns the current app state object.
+ * - setHush, setTempo, setPattern, setReverb, setVolume, setDrumBank, setProcValue:
+ *   State setters for updating the corresponding parts of the app.
+ */
 export default function useSaveJSON({
   getCurrentState,
   setHush,
@@ -10,21 +18,27 @@ export default function useSaveJSON({
   setStatusMessage,
 }) {
   {
+    /**
+     * Save the current app state to a JSON file and download in the browser.
+     */
     function saveToJson() {
-      const state = getCurrentState();
+      const state = getCurrentState(); // get latest state
       const blob = new Blob([JSON.stringify(state, null, 2)], {
         type: "application/json",
       });
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob); // temp URL for Blob
       const a = document.createElement("a");
       a.href = url;
-      a.download = "strudel_state.json";
+      a.download = "strudel_settings.json";
       a.click();
       URL.revokeObjectURL(url);
 
       if (setStatusMessage) setStatusMessage("Succesfully Save!");
     }
-
+    /**
+     * Load state from a user-selected JSON file and update the app state.
+     * @param {File} file - JSON file selected by the user
+     */
     function loadFromJson(file) {
       const reader = new FileReader();
       reader.onload = (event) => {
