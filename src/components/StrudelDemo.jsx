@@ -198,6 +198,11 @@ export default function StrudelDemo() {
       {/* Status info */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>
+
+        {/* 
+          'getReplState().started' is true when the audio engine (REPL) is active.
+          This happens after playback is initiated and becomes false when playback is stopped.
+        */}
         <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
       </div>
 

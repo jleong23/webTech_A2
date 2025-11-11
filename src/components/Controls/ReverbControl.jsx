@@ -1,3 +1,8 @@
+/**
+ * Renders a slider to control the reverb level.
+ * It displays the current reverb value and allows the user to adjust it.
+ */
+
 export default function ReverbControl({ reverb = 0, setReverb }) {
   return (
     <div className="flex flex-col gap-2 w-full max-w-xl mx-auto">

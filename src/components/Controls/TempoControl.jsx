@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 
+/**
+ * Renders a slider and a number input to control the tempo (BPM).
+ * It allows for both quick adjustments through the slider and precise input via the text box.
+ */
+
 export default function TempoControl({ tempo, setTempo }) {
   const [inputValue, setInputValue] = useState(tempo); // local input state
 
