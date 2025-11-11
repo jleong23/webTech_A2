@@ -1,3 +1,10 @@
+/**
+ * MuteControls:
+ * Renders a set of toggle switches for muting individual audio tracks.
+ * It dynamically creates a switch for each specified instrument ( drums, bass, arps ).
+ * The mute state is controlled by the parent component through the `hush` and `setHush` props.
+ */
+
 export default function MuteControls({ hush, setHush }) {
   const toggle = (key) => setHush((prev) => ({ ...prev, [key]: !prev[key] }));
 

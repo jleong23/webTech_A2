@@ -42,6 +42,8 @@ export default function StrudelDemo() {
     arps: false,
   });
 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const [tempo, setTempo] = useState(140); // State for tempo ( 140bpm as default )
 
   const [pattern, setPattern] = useState(0); // state for drum pattern ( pattern 0 as default )
@@ -89,6 +91,8 @@ export default function StrudelDemo() {
       pattern,
       drumBank,
       tempo,
+      isPlaying,
+      setIsPlaying,
     });
 
   // Run console monkey patch and d3Date listener once
@@ -172,6 +176,7 @@ export default function StrudelDemo() {
         onPlay={handlePlay}
         onStop={handleStop}
         onProcPlay={handleProcAndPlay}
+        isPlaying={isPlaying}
         hush={hush}
         setHush={setHush}
         tempo={tempo}

@@ -1,3 +1,10 @@
+/**
+ * PlayStopButtons:
+ * Renders Play and Stop buttons for controlling audio playback.
+ * The `isPlaying` prop visually indicates the active playback state,
+ * and `onPlay`/`onStop` props handle the click events.
+ */
+
 import { FaPlay, FaPause } from "react-icons/fa";
 
 function PlayStopButtons({ onPlay, onStop, isPlaying }) {
@@ -7,7 +14,7 @@ function PlayStopButtons({ onPlay, onStop, isPlaying }) {
       <button
         onClick={onPlay}
         className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl transition-all duration-300
-          ${isPlaying ? "bg-red-500 shadow-red-400/50 animate-pulse" : "bg-red-600 hover:bg-red-700"}
+          ${isPlaying ? "bg-red-500 animate-pulse" : "bg-red-600 hover:bg-red-700"}
           text-white`}
         title="Play"
       >

@@ -1,21 +1,9 @@
 /**
  * ControlsPanel:
- * Features:
- * 1. Process & play preprocessed text (ProcAndPlay)
- * 2. Play / Stop buttons for playback (PlayStopButtons)
- * 3. Mute/hush drums option (MuteDrum)
- * 4. Tempo adjustment slider (TempoControl)
- * 5. Reverb adjustment slider (ReverbControl)
- * 6. Volume adjustment slider (VolumeSlider)
- *
- * Props:
- * - onPlay: Callback to start playback
- * - onStop: Callback to stop playback
- * - onProcPlay: Callback to play processed text
- * - p1Hush / setP1Hush: State for muting drums
- * - tempo / setTempo: State for tempo value
- * - volume / setVolume: State for volume
- * - reverb / setReverb: State for reverb amount
+ * Renders a control panel with various audio controls.
+ * This component includes playback buttons, mute toggles, and sliders for
+ * tempo, reverb, and volume. It aggregates several smaller control components
+ * into a single, unified panel.
  */
 
 import MuteControls from "./MuteControls";
@@ -37,13 +25,14 @@ export default function ControlsPanel({
   setVolume,
   reverb,
   setReverb,
+  isPlaying,
 }) {
   return (
     <div className="p-5 space-y-6 bg-gray-900 text-white rounded-lg shadow-lg max-w-xl mx-auto">
       <ProcAndPlay onProcPlay={onProcPlay} />
 
       {/* Play / Stop */}
-      <PlayStopButtons onPlay={onPlay} onStop={onStop} />
+      <PlayStopButtons onPlay={onPlay} onStop={onStop} isPlaying={isPlaying} />
 
       {/* Mute drums Button */}
       <MuteControls hush={hush} setHush={setHush} />

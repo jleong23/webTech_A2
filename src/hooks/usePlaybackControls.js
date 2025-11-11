@@ -6,6 +6,7 @@ export default function usePlaybackControls({
   editor,
   setCode,
   evaluate,
+  setIsPlaying,
   stop,
   getReplState,
   procValue,
@@ -18,6 +19,8 @@ export default function usePlaybackControls({
 }) {
   // Proc & Play handler
   const handleProcAndPlay = useCallback(() => {
+    setIsPlaying(true);
+
     buildAndEvaluate(
       {
         editor,
@@ -34,6 +37,7 @@ export default function usePlaybackControls({
       },
       { evaluateIfPlaying: false }
     );
+
     evaluate();
   }, [
     editor,
@@ -47,17 +51,20 @@ export default function usePlaybackControls({
     pattern,
     drumBank,
     tempo,
+    setIsPlaying, // ✅ add dependency
   ]);
 
   // Play handler
   const handlePlay = useCallback(() => {
+    setIsPlaying(true);
     evaluate();
-  }, [evaluate]);
+  }, [evaluate, setIsPlaying]);
 
   // Stop handler
   const handleStop = useCallback(() => {
+    setIsPlaying(false);
     stop();
-  }, [stop]);
+  }, [stop, setIsPlaying]);
 
   const syncMuteStates = useCallback(() => {
     if (!editor) return;

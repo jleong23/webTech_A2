@@ -38,8 +38,8 @@ export default function SaveJSON({ saveToJson, loadFromJson, statusMessage }) {
           <div
             className={`px-3 py-2 rounded-xl shadow-2xl text-lg font-medium text-white backdrop-blur-xl transition-all duration-500 ${
               statusMessage.startsWith("Succesfully")
-                ? "bg-green-500/60 shadow-green-400/70"
-                : "bg-red-500/60 shadow-red-400/70"
+                ? "bg-green-500/80 shadow-green-400/70"
+                : "bg-red-500/80 shadow-red-400/70"
             }`}
           >
             {statusMessage}
