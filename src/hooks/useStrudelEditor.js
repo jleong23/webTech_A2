@@ -92,11 +92,11 @@ export default function useStrudelEditor({
   ); // Get the current REPL (interpreter) state - whether it's running
 
   return {
-    editor: editorRef.current,
-    evaluate,
-    stop,
-    setCode,
-    ready,
-    getReplState,
+    editor: editorRef.current, // raw strudelMirror instance
+    evaluate, // function to execute strudel code in editor
+    stop, // stop all playback
+    setCode, // set code in the editor
+    ready, // set true when editor is initialised
+    getReplState, // get current state
   };
 }

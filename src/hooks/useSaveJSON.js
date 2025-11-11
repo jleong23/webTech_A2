@@ -1,10 +1,5 @@
 /**
- * Custom hook to handle saving and loading Strudel app state as JSON.
- *
- * Props:
- * - getCurrentState: Function that returns the current app state object.
- * - setHush, setTempo, setPattern, setReverb, setVolume, setDrumBank, setProcValue:
- *   State setters for updating the corresponding parts of the app.
+ * Custom hook to handle saving the application's current state to a JSON file and load it.
  */
 export default function useSaveJSON({
   getCurrentState,
@@ -35,9 +30,9 @@ export default function useSaveJSON({
 
       if (setStatusMessage) setStatusMessage("Succesfully Save!");
     }
+
     /**
      * Load state from a user-selected JSON file and update the app state.
-     * @param {File} file - JSON file selected by the user
      */
     function loadFromJson(file) {
       const reader = new FileReader();
