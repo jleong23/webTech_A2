@@ -1,3 +1,8 @@
+/**
+ * Renders buttons for saving the current state to a JSON file and loading state from one.
+ * It also displays a status message to provide feedback on these operations.
+ * The save/load logic is handled by the parent component via props.
+ */
 import { FaSave } from "react-icons/fa";
 import { CiSaveDown2 } from "react-icons/ci";
 export default function SaveJSON({ saveToJson, loadFromJson, statusMessage }) {

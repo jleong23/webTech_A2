@@ -44,13 +44,13 @@ export default function StrudelDemo() {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [tempo, setTempo] = useState(140); // State for tempo ( 140bpm as default )
+  const [tempo, setTempo] = useState(140); // ( 140bpm as default )
 
-  const [pattern, setPattern] = useState(0); // state for drum pattern ( pattern 0 as default )
+  const [pattern, setPattern] = useState(0); // ( pattern 0 as default )
 
-  const [reverb, setReverb] = useState(0.6); // state for reverb control ( 0.6 as default reverb )
+  const [reverb, setReverb] = useState(0.6); // ( 0.6 as default reverb )
 
-  const [volume, setVolume] = useState(1); // stat for volume control
+  const [volume, setVolume] = useState(1); // state for volume control
 
   const [drumBank, setDrumBank] = useState("RolandTR808"); // state for select drum bank
 
@@ -95,7 +95,11 @@ export default function StrudelDemo() {
       setIsPlaying,
     });
 
-  // Run console monkey patch and d3Date listener once
+  /**
+   * Sets up global configurations on initial component mount.
+   * This includes a console monkey-patch for Strudel's output and
+   * an event listener for D3.js data visualizations.
+   */
   useEffect(() => {
     console_monkey_patch();
 
@@ -110,14 +114,10 @@ export default function StrudelDemo() {
   }, []);
 
   /**
-   * Update editor when changes made:
-   * 1. p1Hush (mute/unmute drums)
-   * 2. tempo
-   * 3. pattern
-   * 4. reverb
-   * 5. drumBank
-   * 6. volume
-   * 7. procValue (main Strudel code)
+   * This is the main effect that reacts to any change in the audio controls or editor code.
+   * It rebuilds the Strudel code with the current state (tempo, volume, etc.)
+   * and re-evaluates it in the audio engine. A debounce timer is used to prevent
+   * excessive updates while the user is actively changing values.
    */
   useEffect(() => {
     if (!editor) return;
@@ -160,6 +160,10 @@ export default function StrudelDemo() {
     tempo,
   ]);
 
+  /**
+   * Manages the visibility of the status message for save/load operations.
+   * The message automatically disappears after 2 seconds.
+   */
   useEffect(() => {
     if (!statusMessage) return;
     const timer = setTimeout(() => setStatusMessage(""), 2000);
@@ -172,6 +176,9 @@ export default function StrudelDemo() {
         Strudel Mixer
       </h2>
 
+      {/* 
+        The main panel for all playback and audio effect controls.
+      */}
       <ControlsPanel
         onPlay={handlePlay}
         onStop={handleStop}
@@ -189,13 +196,19 @@ export default function StrudelDemo() {
         loadFromJson={loadFromJson}
       />
 
+      {/* 
+        A panel dedicated to selecting drum kits and patterns.
+      */}
       <SelectorPanel
         drumBank={drumBank}
         setDrumBank={setDrumBank}
         pattern={pattern}
         setPattern={setPattern}
       />
-      {/* Status info */}
+      {/* 
+        Displays the initialization status of the Strudel editor and its audio engine (REPL).
+        Useful for debugging and understanding the system's state.
+      */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>
 
@@ -206,6 +219,9 @@ export default function StrudelDemo() {
         <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
       </div>
 
+      {/* 
+        Component providing buttons to save the current state to a JSON file or load from one.
+      */}
       <div className="mt-4 flex justify-end">
         <SaveJSON
           saveToJson={saveToJson}
@@ -214,7 +230,9 @@ export default function StrudelDemo() {
         />
       </div>
 
-      {/* Editor  */}
+      {/* 
+        The collapsible section containing the code editor and the Strudel output/visualization.
+      */}
       <div className="mt-6 space-y-6">
         <PreProessTextArea
           procValue={procValue}

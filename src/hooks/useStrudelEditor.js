@@ -1,10 +1,6 @@
 /**
- * useStrudelEditor: A custom Hook
- * - Creates and manage Strudel editor via StrudelMirror
- * - It set up audio and sound modules
- * - Draws a visual representation (pianoroll)
- * - Provides functions to play, stop, and set code
- * Returns: { editor, evaluate, stop, setCode, ready, getReplState }
+ * useStrudelEditor:
+ * Custom hook that creates, manages and clean up strudel code editor(StudelMirror)
  */
 import { useEffect, useRef, useState, useCallback } from "react";
 import { StrudelMirror } from "@strudel/codemirror"; // CodeMirror text editor component
@@ -95,7 +91,6 @@ export default function useStrudelEditor({
     []
   ); // Get the current REPL (interpreter) state - whether it's running
 
-  // Return everything to StrudelDemo
   return {
     editor: editorRef.current,
     evaluate,

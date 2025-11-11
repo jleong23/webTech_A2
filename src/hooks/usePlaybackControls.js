@@ -1,7 +1,10 @@
+/**
+ * usePlaybackControls:
+ * Manages playback controls for the Strudel editor.
+ */
 import { useCallback } from "react";
 import { buildAndEvaluate } from "./useProcessedEditor";
 import { toggleDrums, toggleArp, toggleBass } from "../utils/editorHelpers";
-
 export default function usePlaybackControls({
   editor,
   setCode,
@@ -17,6 +20,11 @@ export default function usePlaybackControls({
   drumBank,
   tempo,
 }) {
+  /**
+   * handleProcAndPlay:
+   * Processes the code and starts playback.
+   * It uses useCallback to prevent unnecessary re-renders.
+   */
   // Proc & Play handler
   const handleProcAndPlay = useCallback(() => {
     setIsPlaying(true);
@@ -51,15 +59,25 @@ export default function usePlaybackControls({
     pattern,
     drumBank,
     tempo,
-    setIsPlaying, // ✅ add dependency
+    setIsPlaying,
   ]);
 
+  /**
+   * handlePlay:
+   * Starts playback.
+   * It uses useCallback to prevent unnecessary re-renders.
+   */
   // Play handler
   const handlePlay = useCallback(() => {
     setIsPlaying(true);
     evaluate();
   }, [evaluate, setIsPlaying]);
 
+  /**
+   * handleStop:
+   * Stops playback.
+   * It uses useCallback to prevent unnecessary re-renders.
+   */
   // Stop handler
   const handleStop = useCallback(() => {
     setIsPlaying(false);

@@ -1,15 +1,13 @@
-import { audioProcess } from "../utils/audioProcess";
-import { changeDrumBank, applyTempo } from "../utils/editorHelpers";
 /**
  * BuildAndEvaluate:
  * - Applying HUSH
- * - Select drum kick pattern
- * - Current tempo
+ * - Select drum pattern
  * - Select drum bank.
- * - Reverb value
+ * - Current tempo
  * After processing the code, it updates the editor via setCode.
- * useCallBack: prevent useEffect from trigger unnecessarily.
  */
+import { audioProcess } from "../utils/audioProcess";
+import { changeDrumBank, applyTempo } from "../utils/editorHelpers";
 export function buildAndEvaluate(
   {
     editor,
@@ -28,7 +26,7 @@ export function buildAndEvaluate(
 ) {
   if (!editor) return;
 
-  // Apply Hush & reverb effect
+  // 1. Apply audio effects like hush (mute), reverb, and volume.
   let replaced = audioProcess(procValue, {
     p1Hush: hush.drums,
     p2Hush: hush.bass,
@@ -37,22 +35,22 @@ export function buildAndEvaluate(
     volume,
   });
 
-  // Update drum pattern
+  // 2. Inject the selected drum pattern into the code.
   replaced = replaced.replaceAll(
     "const pattern = 0",
     `const pattern = ${pattern}`
   );
 
-  // Update drum bank
+  // 3. Set the chosen drum sound bank.
   replaced = changeDrumBank(replaced, drumBank);
 
-  // Update tempo
+  // 4. Apply the current tempo to the code.
   const replacedTempo = applyTempo(replaced, tempo);
 
-  // Update editor code
+  // 5. Update the editor's content with the newly constructed code.
   setCode(replacedTempo);
 
-  // Re-evaluate if music is currently playing
+  // 6. If music is already playing, re-evaluate the code to apply changes immediately.
   if (opts.evaluateIfPlaying && getReplState().started) {
     evaluate();
   }
