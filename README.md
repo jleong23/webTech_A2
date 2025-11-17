@@ -1,6 +1,55 @@
-# Getting Started with Create React App
+## Project Components
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Here is a breakdown of each control component:
+
+### `ControlsPanel.jsx`
+
+This component acts as a container for all the individual audio controls. It arranges them vertically within a styled panel, creating a unified user interface for manipulating the audio.
+
+### `ProcAndPlay.jsx`
+
+This component renders a single "PROC & PLAY" button.
+
+- When music is playing, the button turns bright red and has a pulsing animation to give a clear visual cue.
+- When idle, it's a standard red button.
+- It triggers the `onProcPlay` function when clicked.
+
+### `PlayStopButtons.jsx`
+
+This provides separate "Play" and "Stop" buttons for basic playback control.
+
+- **Play Button**: Features a "Play" icon. When `isPlaying` is true, it pulses to indicate that audio is active. It calls the `onPlay` function when clicked.
+- **Stop Button**: Features a "Pause" icon (though it functions as a stop). It calls the `onStop` function when clicked.
+
+### `MuteControls.jsx`
+
+This component, labeled "Hush (Mute)", displays a set of toggle switches to mute individual instrument tracks.
+
+- It dynamically creates a switch for each instrument key provided (hardcoded in this case to `["drums", "bass", "arps"]`).
+- The state of each switch (`checked` or not) is determined by the `hush` prop.
+- Toggling a switch updates the parent's state via the `setHush` function.
+
+### `TempoControl.jsx`
+
+This allows the user to adjust the tempo, measured in Beats Per Minute (BPM). It offers two methods for input:
+
+- **Slider**: For quick, less precise tempo adjustments within a range of 50 to 200 BPM.
+- **Number Input**: For typing in an exact BPM value. This change is only applied when the user clicks the adjacent checkmark button.
+
+### `ReverbControl.jsx`
+
+This is a straightforward slider for controlling the amount of reverb effect.
+
+- It displays the current reverb value, formatted to two decimal places.
+- The slider allows adjusting the value between 0 (no reverb) and 1 (maximum reverb).
+
+### `VolumeSlider.jsx`
+
+This component manages the master volume.
+
+- **Slider**: Adjusts the volume level from 0 (silent) to 1 (full volume).
+- **Mute/Unmute Button**: Toggles the sound on and off. When un-muting, it cleverly restores the volume to its previous level before it was muted. The button's text and icon change to reflect the current mute state.
+-
 
 ## Available Scripts
 
