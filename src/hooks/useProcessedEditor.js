@@ -1,4 +1,5 @@
 /**
+ * useProcessedEditor:
  * BuildAndEvaluate:
  * - Applying HUSH
  * - Select drum pattern

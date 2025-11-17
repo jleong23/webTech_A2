@@ -1,5 +1,12 @@
-import DataGraph from "./VisualizerGraph/DataGraph";
-import PianoRollCanvas from "./PianoRollCanvas";
+/**
+ * Canvas:
+ * Renders main D3 visualtization components.
+ * Displays:
+ * 1. Piano Roll on the left
+ * 2. Data Graph on the right
+ */
+import DataGraph from "./Visualizers/DataGraph";
+import PianoRollCanvas from "./Visualizers/PianoRoll";
 
 export default function Canvas({ canvasRef, d3Data }) {
   return (

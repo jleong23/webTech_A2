@@ -1,4 +1,5 @@
 /**
+ * VolumeSliders:
  * Renders a slider and a mute/unmute button to control the master volume.
  * It allows the user to adjust the volume and toggle mute.
  */

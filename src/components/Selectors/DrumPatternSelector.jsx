@@ -1,4 +1,5 @@
 /**
+ * DrumPatternSelector:
  * Renders a dropdown menu ( select element ) to allow users to choose a drum pattern
  * onChange event is triggered when user selects a new pattern from the dropdown.
  */

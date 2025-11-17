@@ -1,4 +1,5 @@
 /**
+ * SelectorPanel:
  * Renders a panel that combines the DrumSoundSelector and DrumPatternSelector components.
  * It uses a grid layout to arrange the drum sound & pattern selectors.
  */

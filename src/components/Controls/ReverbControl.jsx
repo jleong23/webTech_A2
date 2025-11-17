@@ -1,4 +1,5 @@
 /**
+ * ReverbControl:
  * Renders a slider to control the reverb level.
  * It displays the current reverb value and allows the user to adjust it.
  */

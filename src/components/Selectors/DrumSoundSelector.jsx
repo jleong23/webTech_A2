@@ -1,4 +1,5 @@
 /**
+ * DrumSoundSelector:
  * Renders a dropdown menu ( select element ) to allow users to choose a drum kit ( sound bank )
  * onChange event is triggered when user selects a new kit from the dropdown.
  */

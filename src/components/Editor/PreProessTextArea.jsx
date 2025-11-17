@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect } from "react";
-import { FiChevronDown } from "react-icons/fi"; // import the chevron icon
-
 /**
+ * PreProessTextArea:
  * Renders a collapsible panel containing a text area for input and an output display for the Strudel editor.
  * It allows users to input code, which is then processed and displayed.
  * The component manages its collapsible state and integrates with Strudel editor refs.
  */
+import { useState, useRef, useEffect } from "react";
+import { FiChevronDown } from "react-icons/fi"; // import the chevron icon
+
 export default function PreProessTextArea({
   procValue,
   onProcChange,

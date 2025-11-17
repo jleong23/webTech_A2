@@ -1,4 +1,5 @@
 /**
+ * SaveJSON:
  * Renders buttons for saving the current state to a JSON file and loading state from one.
  * It also displays a status message to provide feedback on these operations.
  * The save/load logic is handled by the parent component via props.
@@ -9,6 +10,7 @@ export default function SaveJSON({ saveToJson, loadFromJson, statusMessage }) {
   return (
     <div className="flex flex-col items-start gap-2">
       <div className="flex gap-3">
+        {/* Save Button */}
         <button
           onClick={saveToJson}
           className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow-sm transition-colors duration-150"
@@ -20,6 +22,7 @@ export default function SaveJSON({ saveToJson, loadFromJson, statusMessage }) {
         </button>
 
         <label className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow-sm cursor-pointer transition-colors duration-150">
+          {/* Load Button */}
           <span className="flex gap-2">
             Load
             <CiSaveDown2 size={25} />
@@ -38,6 +41,7 @@ export default function SaveJSON({ saveToJson, loadFromJson, statusMessage }) {
         </label>
       </div>
 
+      {/* Status Message if Succesfully load / save */}
       {statusMessage && (
         <div className="fixed bottom-6 left-6 z-50 animate-fadeInOut">
           <div

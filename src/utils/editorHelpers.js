@@ -1,7 +1,8 @@
 /**
- * - Toggles (mute/unmute) drum by adjusting postgain
- * - Accepts the 'editor' instance and a boolean 'mute'
+ * editorHelpers:
  */
+
+// Toggles mute state by adjusting drum postgain
 export const toggleDrums = (editor, mute) => {
   if (!editor?.repl) return;
   const drums = editor.repl.state.scope?.drums;
@@ -9,13 +10,14 @@ export const toggleDrums = (editor, mute) => {
   if (drums) drums.postgain(mute ? 0 : 1);
   if (drums2) drums2.postgain(mute ? 0 : 1);
 };
-
+// Toggles mute state by adjusting arp postgain
 export const toggleArp = (editor, mute) => {
   if (!editor?.repl) return;
   const arp = editor.repl.state.scope?.arp;
   if (arp) arp.postgain(mute ? 0 : 1);
 };
 
+// Toggles mute state by adjusting bass postgain
 export const toggleBass = (editor, mute) => {
   if (!editor?.repl) return;
   const bass = editor.repl.state.scope?.bass;

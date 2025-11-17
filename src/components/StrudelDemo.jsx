@@ -1,5 +1,18 @@
 /**
- * Main Container
+ * Main Container: StrudelDemo.
+ * This component orchestrates the logic of EchoLab:
+ *  - Playback controls (play, stop, proc play)
+ *  - Audio effect controls (volume, reverb, tempo, mute states)
+ *  - Drum kit and pattern selection
+ *  - Live visualizations (piano roll and music line/bar charts)
+ *  - Strudel code editor and output
+ *  - Save/Load functionality via JSON
+ *
+ * Responsibilities:
+ *  1. Manage all states for playback, effects, and editor content
+ *  2. Mount and control the Strudel editor via custom hooks
+ *  3. Handle live D3 visualizations and REPL state
+ *  4. Provide a unified layout and UI for the mixer
  */
 import { useRef, useEffect, useState } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
@@ -21,6 +34,7 @@ export default function StrudelDemo() {
   const canvasRef = useRef(null);
   const procRef = useRef(null);
 
+  // return current global state of playback controls
   function getCurrentState() {
     return {
       hush,
@@ -32,9 +46,8 @@ export default function StrudelDemo() {
       procValue,
     };
   }
-
+  // --- State Hooks ---
   const [procValue, setProcValue] = useState(stranger_tune || "");
-
   const [hush, setHush] = useState({
     // state for mute instruments
     drums: false,
@@ -78,7 +91,7 @@ export default function StrudelDemo() {
       canvasRef,
       initialCode: procValue,
     });
-
+  // Playback control hooks
   const { handleProcAndPlay, handlePlay, handleStop, syncMuteStates } =
     usePlaybackControls({
       editor,
@@ -97,15 +110,11 @@ export default function StrudelDemo() {
       setIsPlaying,
     });
 
-  /**
-   * Sets up global configurations on initial component mount.
-   * This includes a console monkey-patch for Strudel's output and
-   * an event listener for D3.js data visualizations.
-   */
   useEffect(() => {
-    console_monkey_patch();
+    console_monkey_patch(); // Call monkey patch for strudel editor output
 
     const handleD3Data = (e) => {
+      // Listen to D3 data events for visualizations
       setD3Data(e.detail);
     };
     document.addEventListener("d3Data", handleD3Data);
@@ -115,12 +124,7 @@ export default function StrudelDemo() {
     };
   }, []);
 
-  /**
-   * This is the main effect that reacts to any change in the audio controls or editor code.
-   * It rebuilds the Strudel code with the current state (tempo, volume, etc.)
-   * and re-evaluates it in the audio engine. A debounce timer is used to prevent
-   * excessive updates while the user is actively changing values.
-   */
+  // Effects to rebuild and evaluate Strudel code on state changes
   useEffect(() => {
     if (!editor) return;
 
@@ -144,7 +148,7 @@ export default function StrudelDemo() {
         { evaluateIfPlaying: true } // evaluate immediately if already playing
       );
 
-      // Sync drum mute/unmute according to p1Hush
+      // Sync drum mute/unmute according to hush state
       syncMuteStates();
     }, 150);
 
@@ -201,7 +205,7 @@ export default function StrudelDemo() {
       />
 
       {/* 
-        A panel dedicated to selecting drum kits and patterns.
+        Panel for selecting drum kits and patterns.
       */}
       <SelectorPanel
         drumBank={drumBank}
@@ -209,23 +213,17 @@ export default function StrudelDemo() {
         pattern={pattern}
         setPattern={setPattern}
       />
-      {/* 
-        Displays the initialization status of the Strudel editor and its audio engine (REPL).
-        Useful for debugging and understanding the system's state.
-      */}
+      {/* Editor and REPL status indicators */}
       <div className="mt-2  text-gray-200 flex justify-center gap-6">
         <div>Editor ready: {ready ? "yes" : "no"}</div>
 
         {/* 
           'getReplState().started' is true when the audio engine (REPL) is active.
-          This happens after playback is initiated and becomes false when playback is stopped.
         */}
         <div>Repl started: {getReplState().started ? "yes" : "no"}</div>
       </div>
 
-      {/* 
-        Component providing buttons to save the current state to a JSON file or load from one.
-      */}
+      {/* Save / Load JSON panel */}
       <div className="mt-4 flex justify-end">
         <SaveJSON
           saveToJson={saveToJson}
@@ -234,6 +232,7 @@ export default function StrudelDemo() {
         />
       </div>
 
+      {/* Visualization Canvas */}
       <div className="mt-6 space-y-6">
         <div className="">
           <Canvas canvasRef={canvasRef} d3Data={d3Data} />
