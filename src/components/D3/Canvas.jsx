@@ -1,4 +1,4 @@
-import DataGraph from "./DataGraph";
+import DataGraph from "./VisualizerGraph/DataGraph";
 import PianoRollCanvas from "./PianoRollCanvas";
 
 export default function Canvas({ canvasRef, d3Data }) {
