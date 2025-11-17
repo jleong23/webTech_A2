@@ -19,7 +19,7 @@ export default function DataGraph({ data }) {
   const drumData = numericData.slice(third, 2 * third).slice(-maxPoints);
 
   return (
-    <div className="mt-3 h-96 p-2 border rounded bg-gray-900 space-y-4">
+    <div className="mt-3 h-96 p-2 border rounded bg-black space-y-4">
       <LineChart data={bassData} />
       <BarChart data={drumData} />
     </div>
