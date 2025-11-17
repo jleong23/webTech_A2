@@ -5,7 +5,6 @@ import { useRef, useEffect, useState } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
 import PreProessTextArea from "./Editor/PreProessTextArea";
 import ControlsPanel from "./Controls/ControlsPanel";
-import PianoRollCanvas from "./D3/PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import SelectorPanel from "./Selectors/SelectorPanel";
@@ -13,7 +12,7 @@ import { buildAndEvaluate } from "../hooks/useProcessedEditor";
 import usePlaybackControls from "../hooks/usePlaybackControls";
 import useSaveJSON from "../hooks/useSaveJSON";
 import SaveJSON from "./SaveChanges/SaveJSON";
-import DataGraph from "./D3/DatGraph";
+import Canvas from "./D3/Canvas";
 
 export default function StrudelDemo() {
   // Refs to DOM elements used by the Strudel editor
@@ -235,10 +234,13 @@ export default function StrudelDemo() {
         />
       </div>
 
-      {/* 
+      <div className="mt-6 space-y-6">
+        <div className="">
+          <Canvas canvasRef={canvasRef} d3Data={d3Data} />
+        </div>
+        {/* 
         The collapsible section containing the code editor and the Strudel output/visualization.
       */}
-      <div className="mt-6 space-y-6">
         <PreProessTextArea
           procValue={procValue}
           onProcChange={setProcValue}
@@ -246,10 +248,6 @@ export default function StrudelDemo() {
           editorRootRef={editorRootRef}
           outputRootRef={outputRootRef}
         />{" "}
-        <div>
-          <PianoRollCanvas canvasRef={canvasRef} />
-          <DataGraph data={d3Data} />
-        </div>
       </div>
     </div>
   );
