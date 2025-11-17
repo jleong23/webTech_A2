@@ -49,7 +49,34 @@ This component manages the master volume.
 
 - **Slider**: Adjusts the volume level from 0 (silent) to 1 (full volume).
 - **Mute/Unmute Button**: Toggles the sound on and off. When un-muting, it cleverly restores the volume to its previous level before it was muted. The button's text and icon change to reflect the current mute state.
--
+
+### `SaveJSON.jsx`
+
+This component provides the functionality to save the current application state to a JSON file and to load a state from such a file.
+
+- **Save Button**: A button with a "Save" icon that, when clicked, triggers the `saveToJson` function to export the current settings.
+- **Load Button**: A button with a "Load" icon that opens a file dialog to select a JSON file. Once a file is chosen, the `loadFromJson` function is called to import the settings.
+- **Status Message**: It displays a temporary notification at the bottom of the screen to inform the user about the outcome of the save/load operation (e.g., success or failure). The message style changes to reflect the status.
+
+### `SelectorPanel.jsx`
+
+This component serves as a container for the drum-related selectors, grouping them under a "Drum Controls" heading. It arranges the `DrumSoundSelector` and `DrumPatternSelector` components in a responsive grid.
+
+It composes the following sub-components:
+
+#### `DrumSoundSelector.jsx`
+
+Renders a dropdown menu to allow users to choose a drum kit (sound bank).
+
+- The available kits are: "RolandTR808", "RolandTR909", "KorgDDM110", and "ElektronAnalogRytm".
+- When a user selects a new kit from the dropdown, the `onChange` event is triggered, which updates the application's state.
+
+#### `DrumPatternSelector.jsx`
+
+Renders a dropdown menu for selecting a drum pattern.
+
+- It provides a list of predefined drum patterns (e.g., "Pattern 0", "Pattern 1", "Pattern 2").
+- Selecting a new pattern from the dropdown triggers the `onChange` event to update the current pattern in the application.
 
 ## Available Scripts
 
