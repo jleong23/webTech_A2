@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import useStrudelEditor from "../hooks/useStrudelEditor";
 import PreProessTextArea from "./Editor/PreProessTextArea";
 import ControlsPanel from "./Controls/ControlsPanel";
-import PianoRollCanvas from "./Canvas/PianoRollCanvas";
+import PianoRollCanvas from "./D3/PianoRollCanvas";
 import console_monkey_patch from "../console-monkey-patch";
 import { stranger_tune } from "../tunes";
 import SelectorPanel from "./Selectors/SelectorPanel";
@@ -13,6 +13,7 @@ import { buildAndEvaluate } from "../hooks/useProcessedEditor";
 import usePlaybackControls from "../hooks/usePlaybackControls";
 import useSaveJSON from "../hooks/useSaveJSON";
 import SaveJSON from "./SaveChanges/SaveJSON";
+import DataGraph from "./D3/DatGraph";
 
 export default function StrudelDemo() {
   // Refs to DOM elements used by the Strudel editor
@@ -55,6 +56,8 @@ export default function StrudelDemo() {
   const [drumBank, setDrumBank] = useState("RolandTR808"); // state for select drum bank
 
   const [statusMessage, setStatusMessage] = useState("");
+
+  const [d3Data, setD3Data] = useState(null);
 
   const { saveToJson, loadFromJson } = useSaveJSON({
     getCurrentState,
@@ -104,7 +107,7 @@ export default function StrudelDemo() {
     console_monkey_patch();
 
     const handleD3Data = (e) => {
-      console.log("D3 data event: ", e.detail);
+      setD3Data(e.detail);
     };
     document.addEventListener("d3Data", handleD3Data);
 
@@ -137,6 +140,7 @@ export default function StrudelDemo() {
           pattern,
           drumBank,
           tempo,
+          syncMuteStates,
         },
         { evaluateIfPlaying: true } // evaluate immediately if already playing
       );
@@ -158,6 +162,7 @@ export default function StrudelDemo() {
     pattern,
     drumBank,
     tempo,
+    syncMuteStates,
   ]);
 
   /**
@@ -243,6 +248,7 @@ export default function StrudelDemo() {
         />{" "}
         <div>
           <PianoRollCanvas canvasRef={canvasRef} />
+          <DataGraph data={d3Data} />
         </div>
       </div>
     </div>
