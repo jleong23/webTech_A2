@@ -181,7 +181,7 @@ export default function StrudelDemo() {
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <h2 className="text-5xl font-heading font-bold text-red-500 text-center">
-        Strudel Mixer
+        EchoLab
       </h2>
 
       {/* 
